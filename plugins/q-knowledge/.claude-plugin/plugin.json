@@ -1,0 +1,10 @@
+{
+  "name": "q-knowledge",
+  "version": "0.1.0",
+  "description": "kdb+/q language support — idiomatic q, qsql, IPC, and core kdb+ database workflows",
+  "author": {
+    "name": "KX",
+    "email": "librarian@kx.com"
+  },
+  "homepage": "https://github.com/KxSystems/kx-skills/tree/main/plugins/q-knowledge"
+}

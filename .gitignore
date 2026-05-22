@@ -1,0 +1,10 @@
+# Packaged skill files (build artefacts — generate locally, don't commit)
+*.skill
+
+# macOS
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+*.swp

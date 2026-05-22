@@ -1,0 +1,10 @@
+{
+  "name": "kdbai-knowledge",
+  "version": "0.1.0",
+  "description": "KDB.AI vector database — schema design, hybrid search, and integration patterns for AI applications",
+  "author": {
+    "name": "KX",
+    "email": "librarian@kx.com"
+  },
+  "homepage": "https://github.com/KxSystems/kx-skills/tree/main/plugins/kdbai-knowledge"
+}

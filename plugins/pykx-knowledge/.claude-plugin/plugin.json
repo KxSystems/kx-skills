@@ -1,0 +1,10 @@
+{
+  "name": "pykx-knowledge",
+  "version": "0.1.0",
+  "description": "PyKX workflows — using kdb+/q from Python, conversions between Python and q types, and PyKX API guidance",
+  "author": {
+    "name": "KX",
+    "email": "librarian@kx.com"
+  },
+  "homepage": "https://github.com/KxSystems/kx-skills/tree/main/plugins/pykx-knowledge"
+}

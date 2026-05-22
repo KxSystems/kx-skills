@@ -1,0 +1,39 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "kx-skills",
+  "description": "Public KX skills for Claude Code — kdb+/q, PyKX, kdb-X, and KDB.AI",
+  "owner": {
+    "name": "KX",
+    "email": "librarian@kx.com"
+  },
+  "plugins": [
+    {
+      "name": "q-knowledge",
+      "description": "kdb+/q language support — idiomatic q, qsql, IPC, and core kdb+ database workflows",
+      "source": "./plugins/q-knowledge",
+      "category": "development",
+      "homepage": "https://github.com/KxSystems/kx-skills/tree/main/plugins/q-knowledge"
+    },
+    {
+      "name": "pykx-knowledge",
+      "description": "PyKX workflows — using kdb+/q from Python, conversions between Python and q types, and PyKX API guidance",
+      "source": "./plugins/pykx-knowledge",
+      "category": "development",
+      "homepage": "https://github.com/KxSystems/kx-skills/tree/main/plugins/pykx-knowledge"
+    },
+    {
+      "name": "kdbx-knowledge",
+      "description": "kdb-X workflows and patterns for the next-generation KX time-series database",
+      "source": "./plugins/kdbx-knowledge",
+      "category": "development",
+      "homepage": "https://github.com/KxSystems/kx-skills/tree/main/plugins/kdbx-knowledge"
+    },
+    {
+      "name": "kdbai-knowledge",
+      "description": "KDB.AI vector database — schema design, hybrid search, and integration patterns for AI applications",
+      "source": "./plugins/kdbai-knowledge",
+      "category": "development",
+      "homepage": "https://github.com/KxSystems/kx-skills/tree/main/plugins/kdbai-knowledge"
+    }
+  ]
+}
