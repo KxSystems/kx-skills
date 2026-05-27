@@ -14,6 +14,8 @@ Run KX qlint on a single q/qSQL code snippet via the `run.sh` script that sits i
 
 `QLINT_DIR` must point to the directory containing KX's `qlint.q_` — there is no default; the wrapper exits with code 2 and a clear stderr message if it is unset or the file is missing. `q` is expected on `PATH`; override with the `Q` env var if not. If you don't have KX Developer installed, see this plugin's [README](../../README.md) for the recommended setup.
 
+**If `QLINT_DIR` is unset or `qlint.q_` is missing (exit 2), ASK THE USER for the correct path.** Do **not** run `find /` or other filesystem-wide searches to locate it unless the user explicitly requests — they are slow and the user already knows where it lives. A narrow check in obvious places (e.g. `~/.kx`, the plugin's own directory) is fine as a one-shot, but anything broader should be a question.
+
 ## Gather parameters
 
 | Parameter | Default | Description |
@@ -68,7 +70,7 @@ Exit codes:
 |------|---------|
 | `0` | No `errorClass=`error` rows. Snippet is acceptable. Warnings may still be present. |
 | `1` | At least one error-level row. Snippet has a real qlint failure. |
-| `2` | Environment misconfig (missing `qlint.q_` or missing `q` binary). |
+| `2` | Environment misconfig (missing `qlint.q_` or missing `q` binary). **Ask the user for the path; don't filesystem-search unless they explicitly request.** |
 
 After running, report to the user: (a) any error-level rows verbatim, (b) a one-line summary of warnings, (c) the exit code.
 
