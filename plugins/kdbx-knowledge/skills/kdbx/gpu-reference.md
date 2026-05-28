@@ -4,7 +4,7 @@
 
 Load with: `.gpu:use`kx.gpu`
 
-**Concepts**: GPU VRAM data = `foreign` type in q. **Mixed residency** = some columns GPU, others CPU.
+**Concepts**: GPU VRAM data = `foreign` type in q. **Mixed residency** = some columns GPU, others CPU. **Nested columns** supported, 1 level deep only (since 2.0.0).
 
 ---
 
@@ -20,11 +20,13 @@ T:.gpu.append[T1;T2]                          / Join GPU-resident tables
 ## Device Management
 
 ```q
-.gpu.ndev[]                                   / Count available GPUs
-.gpu.gdev[]                                   / Current device index
-.gpu.sdev 1                                   / Switch to GPU 1
-.gpu.mdev[]                                   / Memory: used, heap, peak, mphy, free
-.gpu.sync[]                                   / Wait for GPU completion
+.gpu.cntDev[]                                 / Count available GPUs (CUDA_VISIBLE_DEVICES applies)
+.gpu.getDev[]                                 / Current device index (or .gpu.getDev T for an object's device)
+.gpu.setDev 1                                 / Switch to GPU 1
+.gpu.memDev[]                                 / Memory: used, heap, peak, mphy, free
+.gpu.sync[]                                   / Wait for GPU completion (avoid 'wsfull)
+.gpu.getMemRelThres[]                         / Memory release threshold (bytes)
+.gpu.setMemRelThres 1024*1024*1024            / Recommended for perf; releases excess at sync points
 ```
 
 ## GPU qSQL (Functional Select)
@@ -46,9 +48,16 @@ T:.gpu.append[T1;T2]                          / Join GPU-resident tables
 ```
 
 **Supported ops**:
-- Binary: `= <> < > <= >= + - * % | &`
-- Unary: `abs log exp sin asin cos acos tan atan floor ceiling`
-- Aggregates: `sum min max avg count`
+- Binary: `= <> < > <= >= + - * % | & in within xbar`
+- Unary: `abs log exp sin asin cos acos tan atan floor ceiling sqrt`
+- Aggregates: `sum min max avg count first last var dev wavg`
+- Windowed: `mavg`
+- Sorting: `iasc`
+- Casting supported
+
+Where clauses may not filter rows until the final stage — pre-filter on CPU for selective predicates.
+
+Since 2.0.0: `by` clause no longer requires an aggregate, and `mavg` composes with `by`.
 
 ## Sorting & Search
 
@@ -57,12 +66,12 @@ T:.gpu.append[T1;T2]                          / Join GPU-resident tables
 .gpu.xasc[`size`time] T                      / Multi-column sort
 .gpu.asc vec                                  / Sort vector (applies `s#)
 .gpu.iasc vec                                 / Ascending grade indices
-res:.gpu.bin[sortedVec; searchVals]           / Binary search (needs `g#)
+res:.gpu.bin[sortedVec; searchVals]           / Binary search (needs sorted input; long/timestamp/timespan only)
 ```
 
 ## As-of Joins
 
-Require `` `g# `` grouped attribute on join columns.
+Require `` `g# `` grouped attribute on join columns. Limited to one or two key columns; long/timestamp/timespan only.
 
 ```q
 T:.gpu.xgroup[`sym] T                        / Apply grouped attribute
@@ -78,7 +87,7 @@ T:.gpu.xgroup[`sym] T                        / Apply grouped attribute
 .gpu.count T                                  / Row/element count
 .gpu.take[5;T]                                / First 5 rows
 .gpu.take[-3;T]                               / Last 3 rows
-.gpu.drop[`col1`col2] T                       / Remove columns
+.gpu.drop[`col1`col2] T                       / Remove columns (drop-by-count not supported)
 .gpu.sublist[2 5;T]                           / Slice: start=2, len=5
 .gpu.gather[vec;idxVec]                       / Index-based selection
 ```
@@ -89,14 +98,24 @@ T:.gpu.xgroup[`sym] T                        / Apply grouped attribute
 .gpu.meta T                                   / Column types + residency (cpu/gpu)
 .gpu.attr vec                                 / Attribute: `s `u `p `g or `
 .gpu.type vec                                 / Type code (e.g. 7h for long)
-.gpu.group vec                                / Apply `g# attribute
+.gpu.group vec                                / Apply `g# attribute (long/timestamp/timespan only)
 .gpu.xgroup[`sym`time] T                     / Group specific columns
+```
+
+## Profiling
+
+```q
+rid:.gpu.nvtx.start "load trades"             / NVTX range begin (returns range id)
+.gpu.nvtx.end rid                             / NVTX range end
+.gpu.profiler.start[]                         / cudaProfilerStart
+.gpu.profiler.stop[]                          / cudaProfilerStop
 ```
 
 ## Gotchas
 
-- Only `` `s# `` attribute survives `.gpu.from` round-trip back to CPU
-- Symbol sorting not yet implemented in `.gpu.asc`
+- All attributes preserved on `.gpu.to`; only `` `s# `` survives `.gpu.from` back to CPU
+- `.gpu.append` preserves only `` `g# `` on GPU-resident appends
+- Symbol sorting not yet implemented in `.gpu.asc` / `.gpu.xasc` — enumerate first
 - `.gpu.select` requires ALL columns on device — `.gpu.to` first
-- `.gpu.bin` and `.gpu.aj` require `` `g# `` grouped attribute
-- 10x-25x speedups typical; near-linear multi-GPU scaling
+- `.gpu.aj` requires `` `g# `` grouped attribute; `.gpu.bin` requires sorted input
+- `GPU_LAUNCH_FAIL` error indicates a GPU setup issue.  Verify drivers, CUDA, env vars
