@@ -1,6 +1,6 @@
 ---
 name: kxmeta-author
-description: Writing qdoc annotations for `aimeta` so the compiler publishes tables and functions correctly. Mandatory `@kind`/`@name` markers, the chained `@col` modifier form, q-language traps that silently drop items, and the recompile loop. Use when adding or editing `/ @kind ...` annotation blocks in a q codebase that loads `aimeta`, or when annotated items aren't surfacing in `meta.json`. For the wire model & tag vocabulary see ../../reference/agent-guide.md.
+description: Write qdoc annotations for `aimeta` so the compiler publishes tables and functions correctly. Mandatory `@kind`/`@name` markers, the chained `@col` modifier form, q-language traps that silently drop items, and the recompile loop. Use when adding or editing `/ @kind ...` annotation blocks in a q codebase that loads `aimeta`, or when annotated items aren't surfacing in `meta.json`. For the wire model & tag vocabulary see ../../reference/agent-guide.md.
 ---
 
 # Writing `aimeta` annotations

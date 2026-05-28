@@ -1,6 +1,6 @@
 ---
 name: qlint-snippet
-description: Lint a single q/qSQL code snippet using KX qlint. Reads code from stdin or argument and prints the raw lint table. Use when the user says "qlint this snippet", "lint this q code", "check syntax of <code>", "qlint snippet", or wants quick lint feedback on a piece of q code.
+description: Lint a single q/qSQL code snippet using KX qlint. Reads code from stdin or argument and prints the raw lint table. Use when the user says "qlint this snippet", "lint this q code", "check syntax of <code>", "qlint snippet", or wants quick lint feedback on a piece of q code. Also trigger whenever Claude has just generated q code and should validate it before presenting to the user.
 ---
 
 # qlint-snippet

@@ -15,7 +15,6 @@ Unified compute engine: time-series analytics + vector search + GPU-accelerated 
 | q language syntax, operators, table queries | `/q` |
 | PyKX Python-to-kdb+ integration | `/pykx` |
 | KDB.AI cloud vector database | `/kdbai` |
-| kdb Insights enterprise platform | `/kdb-insights` |
 
 ## Module Loading
 
@@ -120,9 +119,9 @@ s)SELECT AVG(price) FROM trades WHERE sym='AAPL' GROUP BY time/5 / SQL
 | `rank` on search | Empty index | Verify data populated |
 | `type` on hnsw.put | Wrong vector type | Cast to `real` |
 
-## MCP Tools
+## Related skills
 
-- `mcp__qmcp__connect_to_q` — Connect to KDB-X
-- `mcp__qmcp__query_q` — Execute queries
-
-## User Request: $ARGUMENTS
+- `q` — q language syntax
+- `pykx` — Python interface to kdb+
+- `kdbai` — KDB.AI vector database
+- `kxmeta-author` / `kxmeta-discover` — `aimeta` annotation authoring and discovery

@@ -219,11 +219,8 @@ kx.licensed                              # True if licensed
 3. **Batch operations** -- fewer IPC calls = better performance
 4. **Use context manager** -- ensures proper connection cleanup
 
-## MCP Tools
+## Related skills
 
-- `mcp__qmcp__connect_to_q` -- Connect to q server
-- `mcp__qmcp__query_q` -- Execute q queries
-
-**Related:** `/q` for q language syntax, `/kdbx` for KDB-X platform, `/kdbai` for KDB.AI vector DB.
-
-## User Request: $ARGUMENTS
+- `q` — q language syntax and kdb+ workflows
+- `kdbx` — KDB-X platform features
+- `kdbai` — KDB.AI vector database

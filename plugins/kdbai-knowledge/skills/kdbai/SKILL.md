@@ -249,11 +249,8 @@ results = table.query(
 | IVF returns empty | Must `table.train(df)` before insert |
 | Delete fails | Only works on no-index, flat, qFlat tables |
 
-## MCP Tools
+## Related skills
 
-- `mcp__qmcp__connect_to_q` -- Connect to KDB.AI/q server
-- `mcp__qmcp__query_q` -- Execute q queries
-
-**Related:** `/q` for q language, `/pykx` for PyKX, `/kdbx` for KDB-X AI libs.
-
-## User Request: $ARGUMENTS
+- `q` — q language syntax
+- `pykx` — Python interface to kdb+
+- `kdbx` — KDB-X AI libraries

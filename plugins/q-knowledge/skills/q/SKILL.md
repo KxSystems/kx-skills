@@ -1,13 +1,13 @@
 ---
 name: q
-description: Use when writing, editing, reviewing, or debugging q/kdb+ code (.q files), querying kdb+ tables, translating Python to q, running q from shell, doing time-series analysis, or optimizing q performance. Also use when encountering q errors ('assign, 'rank, 'type), reserved-word conflicts, right-to-left evaluation bugs, or atom/vector type mismatches.
+description: Use when writing, editing, reviewing, or debugging q/kdb+ code (.q files), querying kdb+ tables, translating Python to q, running q from shell, doing time-series analysis, or optimizing q performance. Also use when encountering q errors ('assign, 'rank, 'type), reserved-word conflicts, right-to-left evaluation bugs, or atom/vector type mismatches. Trigger whenever the user is working with .q files, kdb+ tables, or qsql queries even if they don't explicitly ask for q help.
 ---
 
 # q Language & kdb+
 
 q is a vector-oriented language for kdb+ time-series databases. Right-to-left evaluation, no operator precedence.
 
-**Read the relevant reference now** before writing code — these are not optional:
+Load the matching reference before writing — Python translations and error diagnostics depend on idioms not covered inline:
 - Translating from Python? Load [python-q-mapping.md](references/python-q-mapping.md)
 - Debugging a `'type` / `'rank` / `'assign` / `'domain` error? Load [common-errors.md](references/common-errors.md)
 - Reviewing existing q code? Load [review-checklist.md](references/review-checklist.md)
@@ -309,11 +309,7 @@ exec name!score from t                  / pivot
 fills x                                 / forward fill
 ```
 
-## MCP Tools
+## Related skills
 
-- `mcp__qmcp__connect_to_q` -- Connect first
-- `mcp__qmcp__query_q` -- Execute queries
-
-**Related:** `/pykx` for Python interface, `/kdbx` for KDB-X platform, `/tick` for tick architecture.
-
-## User Request: $ARGUMENTS
+- `pykx` — Python interface to kdb+
+- `kdbx` — KDB-X platform features (modules, AI libs, GPU)
