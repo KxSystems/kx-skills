@@ -100,7 +100,9 @@ T:.gpu.xto[`price`size] trades                / Mixed residency
 .gpu.xasc[`time] T                            / GPU sort
 ```
 
-Requires NVIDIA data center GPUs, CUDA 13.1, driver v590+. 10x-25x speedups, near-linear multi-GPU scaling. **Full API**: See [gpu-reference.md](gpu-reference.md)
+Requires NVIDIA data center GPUs, CUDA 13.1, driver v590+. 10x-25x speedups, near-linear multi-GPU scaling and a GPU-enabled kdb-x license. 
+* **Full API**: See [gpu-reference.md](gpu-reference.md)
+* **Troubleshooting**: See [Troubleshooting Errors - KDB-X Documentation](https://code.kx.com/kdb-x/modules/gpu/troubleshooting-errors.html)
 
 ## Multi-Language
 
