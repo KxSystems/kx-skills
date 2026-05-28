@@ -1,9 +1,9 @@
-# KX Skills for Claude Code
+# KX Plugins for Claude Code
 
 Public marketplace of [Claude Code](https://docs.claude.com/en/docs/claude-code/overview)
 plugins for working with KX products: kdb+/q, PyKX, kdb-X, and KDB.AI.
 
-Each plugin packages a Skill — a folder of markdown that Claude loads
+Each plugin packages one or more Skills — a folder of markdown that Claude loads
 automatically when it recognises a relevant task. Skills teach Claude
 repeatable workflows, quality standards, and domain expertise so everyone
 gets consistent, high-quality results.
