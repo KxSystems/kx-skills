@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "q-knowledge",
-      "description": "kdb+/q language support — idiomatic q, qsql, IPC, and core kdb+ database workflows",
+      "description": "kdb+/q language support — idiomatic q, qsql, IPC, kdb+ workflows, and KX qlint integration via /qlint-snippet",
       "source": "./plugins/q-knowledge",
       "category": "development",
       "homepage": "https://github.com/KxSystems/kx-skills/tree/main/plugins/q-knowledge"
