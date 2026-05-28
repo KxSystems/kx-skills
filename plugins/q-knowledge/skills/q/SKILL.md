@@ -153,7 +153,7 @@ syms where (string each syms) like "*ap*"
 - **`n#x` cycles**: `7#"ab"` = `"abababa"`. Use `n sublist x` for slicing.
 - **`deltas` includes first element as-is.** `deltas 1 3 6` → `1 2 3`. Use `1_deltas x` for pure pairwise diffs.
 - **`"j"$"3"` returns 51** (ASCII). Use `"J"$enlist "3"` to parse a char as a number.
-- **No C-style string escapes.** `"\t"`, `"\n"` are invalid in q.
+- **Limited string escapes.** Valid: `\t` `\n` `\r` `\\` `\"` `\NNN`. Other c-like escapes cause parse errors, eg: `\x41` `\7` `\f` `\v` `\b`.
 
 ## Quick Reference
 

@@ -212,7 +212,7 @@ This file contains detailed reference tables for the q-kdb skill.
 | `ssr` | Search & replace | `ssr["abc";"b";"X"]` → `"aXc"` |
 | `like` | Pattern match | `"abc" like "a*"` → `1b` |
 | `sv` | String from vector | `"/" sv ("ab";"cd")` → `"ab/cd"` |
-| `vs` | Vector from string | `"/" vs "a/b/c"` → `("a";"b";"c")` |
+| `vs` | Vector from string | `"/" vs "a/b/c"` → `(,"a";,"b";,"c")` |
 
 ## 0: File Text Type Characters
 
