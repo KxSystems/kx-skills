@@ -16,7 +16,7 @@ gets consistent, high-quality results.
 |--------------|-------------------------------------------------------------------|------------------|
 | [`q-knowledge`](./plugins/q-knowledge/)                  | kdb+/q language support — idiomatic q, qsql, IPC, kdb+ workflows; also `/qlint-snippet` for KX qlint | Writing q code, querying kdb+ tables, lint checks |
 | [`pykx-knowledge`](./plugins/pykx-knowledge/skills/pykx/) | PyKX — using kdb+/q from Python, type conversions, API guidance  | Working with PyKX, Python-kdb+ integration |
-| [`kdbx-knowledge`](./plugins/kdbx-knowledge/) | kdb-X workflows and `aimeta` metadata authoring + discovery       | KDB-X platform, AI-native vector search, writing/reading aimeta annotations |
+| [`kdbx-knowledge`](./plugins/kdbx-knowledge/) | kdb-X workflows, `aimeta` metadata authoring + discovery, and the KDB-X DB Service (setup, ingest, query, troubleshooting) | KDB-X platform, AI-native vector search, writing/reading aimeta annotations, DB Service ingest & queries |
 | [`kdbai-knowledge`](./plugins/kdbai-knowledge/skills/kdbai/) | KDB.AI vector database — schema, hybrid search, AI integration   | Building vector search or RAG with KDB.AI |
 | [`kdbie-knowledge`](./plugins/kdbie-knowledge/) | KX Insights Enterprise — kxi CLI admin + Stream Processor pipelines | Using kxi to build/deploy packages, manage IE, or writing SP pipelines |
 
@@ -88,8 +88,12 @@ kx-skills/
     │       │   └── gpu-reference.md
     │       ├── kxmeta-author/       ← writing aimeta annotations
     │       │   └── SKILL.md
-    │       └── kxmeta-discover/     ← probing aimeta at runtime
-    │           └── SKILL.md
+    │       ├── kxmeta-discover/     ← probing aimeta at runtime
+    │       │   └── SKILL.md
+    │       └── kdbx-db-service/     ← KDB-X DB Service: setup, ingest, query
+    │           ├── SKILL.md
+    │           ├── recipes/
+    │           └── references/
     ├── kdbai-knowledge/
     │   ├── .claude-plugin/plugin.json
     │   └── skills/kdbai/            ← KDB.AI vector database
