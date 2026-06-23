@@ -1,5 +1,21 @@
 # Setup and Quickstart
 
+## Contents
+
+- [Prerequisites Checklist](#prerequisites-checklist)
+- [Execution Rules for Claude](#execution-rules-for-claude)
+- [Step 1 - Verify Docker](#step-1---verify-docker)
+- [Step 2 - Clone the DB Service Repo](#step-2---clone-the-db-service-repo)
+- [Step 3 - KX Registry Login](#step-3---kx-registry-login)
+- [Step 4 - License Setup](#step-4---license-setup)
+- [Step 5 - Initialise and Start](#step-5---initialise-and-start)
+- [Step 6 - Install Python Client](#step-6---install-python-client)
+- [Step 7 - Install q Client (Optional)](#step-7---install-q-client-optional)
+- [Verify Service is Running](#verify-service-is-running)
+- [Reset the Service (Deletes All Data)](#reset-the-service-deletes-all-data)
+- [.env Key Variables](#env-key-variables)
+- [Directory Structure](#directory-structure)
+
 This module covers first-time setup from scratch through to a working DB Service with sample data loaded. If the service is already running, skip to the section that applies to your task.
 
 ---

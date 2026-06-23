@@ -1,5 +1,17 @@
 # OneTick Cloud Data
 
+## Contents
+
+- [Prerequisites](#prerequisites)
+- [Phase 1 - Authenticate with OneTick Cloud](#phase-1---authenticate-with-onetick-cloud)
+- [Phase 2 - Discover Available Data](#phase-2---discover-available-data)
+- [Phase 3 - Download Data](#phase-3---download-data)
+- [Phase 4 - Clean and Prepare Data](#phase-4---clean-and-prepare-data)
+- [Phase 5 - Ingest into DB Service](#phase-5---ingest-into-db-service)
+- [Phase 6 - Visualise with KX Dashboards (Optional)](#phase-6---visualise-with-kx-dashboards-optional)
+- [OneTick Type Mapping](#onetick-type-mapping)
+- [Troubleshooting](#troubleshooting)
+
 This module covers the end-to-end pipeline for pulling market data from OneTick Cloud and ingesting it into the DB Service.
 
 **Time estimate:** 20-40 minutes for a first run; ~5 minutes once you know your database, symbols, and OTQ path.

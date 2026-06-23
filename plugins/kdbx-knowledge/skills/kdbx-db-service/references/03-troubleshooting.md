@@ -1,5 +1,26 @@
 # Troubleshooting
 
+## Contents
+
+- [Service Components](#service-components)
+- [Startup Checklist](#startup-checklist)
+- ["KDB-X DB Service not licensed"](#kdb-x-db-service-not-licensed)
+- [500 / Timeout After Restarting a Single Container](#500--timeout-after-restarting-a-single-container)
+- [Gateway Returns 500 on `/api/v0/tables`](#gateway-returns-500-on-apiv0tables)
+- [fxfeed.py: "Unable to connect to localhost:5002"](#fxfeedpy-unable-to-connect-to-localhost5002)
+- [inotify "No space left on device"](#inotify-no-space-left-on-device)
+- [Import Job Errors: "no file found: /imports/\<filename>"](#import-job-errors-no-file-found-importsfilename)
+- [pip install Fails: "externally-managed-environment"](#pip-install-fails-externally-managed-environment)
+- [Verifying fxfeed.py is Publishing Data](#verifying-fxfeedpy-is-publishing-data)
+- [q Client: `'use` Error (Standard kdb+ vs kdb-x)](#q-client-use-error-standard-kdb-vs-kdb-x)
+- [q Client: `'notfound: kx.dbservice_client` or `'notfound: kx.kurl`](#q-client-notfound-kxdbservice_client-or-notfound-kxkurl)
+- [q Client: New vs Old API](#q-client-new-vs-old-api)
+- [Dashboard "Connection Failed" on Port 10002](#dashboard-connection-failed-on-port-10002)
+- [Notebook Kernel Stuck or Hanging](#notebook-kernel-stuck-or-hanging)
+- [Log Investigation](#log-investigation)
+- [venv / uv Issues](#venv--uv-issues)
+- [`shutil.copy2` PermissionError on Docker Volume](#shutilcopy2-permissionerror-on-docker-volume)
+
 This module covers service component descriptions, common errors, and diagnostic procedures. Check here before digging into raw logs.
 
 ---

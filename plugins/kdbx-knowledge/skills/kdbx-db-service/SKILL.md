@@ -1,6 +1,6 @@
 ---
 name: kdbx-db-service
-version: 4.0.1
+version: 4.0.2
 description: >
   Use this skill whenever working with the KDB-X DB Service - a containerised
   time-series database distributed via Docker Compose. Trigger for any task
@@ -22,7 +22,7 @@ description: >
 
 # KDB-X DB Service Skill
 
-> **v4.0.0**: Fetches documentation live from the official site using `WebFetch` rather than reading local copies. Docs are at `https://code.kx.com/kdb-x/services/db-service/introduction.html` - fetch the relevant page when you need precise API details, parameter names, or code examples.
+> **v4.0.2**: Fetches documentation live from the official site using `WebFetch` rather than reading local copies. Docs are at `https://code.kx.com/kdb-x/services/db-service/introduction.html` - fetch the relevant page when you need precise API details, parameter names, or code examples.
 
 Official documentation: https://code.kx.com/kdb-x/services/db-service/introduction.html
 
