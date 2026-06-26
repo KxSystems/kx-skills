@@ -1,7 +1,7 @@
 {
   "name": "pykx-knowledge",
   "version": "0.1.0",
-  "description": "KDB-X Python workflows — using kdb+/q from Python, conversions between Python and q types, and KDB-X Python API guidance",
+  "description": "KDB-X Python (pykx) workflows — using kdb+/q from Python, conversions between Python and q types, and KDB-X Python API guidance",
   "author": {
     "name": "KX",
     "email": "librarian@kx.com"
