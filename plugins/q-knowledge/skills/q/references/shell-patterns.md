@@ -62,7 +62,7 @@ q src/myprocess.q -p 5015 </dev/null >logs/myprocess.log 2>&1 &
 - `-1 "msg"` — writes to stdout (normal logging)
 - `-2 "msg"` — writes to stderr (errors/warnings)
 - Both end up in the same log file when using `>log 2>&1`
-- String interpolation: `-1 "processed ",string count trades," trades"`
+- String interpolation: `-1 "processed ",(string count trades)," trades"`
 
 ## Connection Strings
 
