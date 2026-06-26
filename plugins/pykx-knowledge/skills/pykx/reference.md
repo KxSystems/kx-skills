@@ -306,7 +306,7 @@ kx.Table(data=pandas_df)                # Table from DataFrame
 
 ## Sources
 
-- [KDB-X Python Overview](https://code.kx.com/pykx/)
+- [KDB-X Python (pykx) Overview](https://code.kx.com/pykx/)
 - [Query API](https://code.kx.com/pykx/api/query.html)
 - [Column Class](https://code.kx.com/pykx/api/columns.html)
 - [IPC Interface](https://code.kx.com/pykx/api/ipc.html)
