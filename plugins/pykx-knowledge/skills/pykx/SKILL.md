@@ -1,11 +1,11 @@
 ---
 name: pykx
-description: Use when working with PyKX for Python-to-kdb+ data conversion, querying tables with Column API, IPC connections, DB management, or integrating Python with q. Also use when encountering type conversion issues, connection errors, or licensed vs unlicensed mode questions.
+description: Use when working with KDB-X Python for Python-to-q data conversion, querying tables with Column API, IPC connections, DB management, or integrating Python with q. Also use when encountering type conversion issues, connection errors, or licensed vs unlicensed mode questions.
 ---
 
-# PyKX
+# KDB-X Python
 
-PyKX is the Python-first interface to kdb+ and q. `import pykx as kx`
+KDB-X Python is the Python-first interface to kdb+ and q. `import pykx as kx`
 
 For full Column methods, DB API, IPC details, type mapping: see [reference.md](reference.md)
 
@@ -50,7 +50,7 @@ q.poll_send('select from trades')   # WRONG! poll_send takes amount, not query
 with kx.RawQConnection(...) as q:   # WRONG! use await, not sync with
 ```
 
-## Creating PyKX Objects
+## Creating pykx Objects
 
 ```python
 qlist = kx.toq([1, 2, 3])                      # LongVector (auto)
@@ -189,7 +189,7 @@ kx.licensed                              # True if licensed
 
 ## Type Mapping
 
-| Python | PyKX | q |
+| Python | pykx | q |
 |--------|------|---|
 | `int` | `LongAtom` | `long` |
 | `float` | `FloatAtom` | `float` |

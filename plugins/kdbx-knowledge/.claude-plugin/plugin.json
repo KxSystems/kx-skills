@@ -1,7 +1,7 @@
 {
   "name": "kdbx-knowledge",
   "version": "0.2.0",
-  "description": "kdb-X workflows and patterns for the next-generation KX time-series database",
+  "description": "KDB-X workflows and patterns for the next-generation KX time-series database",
   "author": {
     "name": "KX",
     "email": "librarian@kx.com"
