@@ -252,5 +252,5 @@ results = table.query(
 ## Related skills
 
 - `q` — q language syntax
-- `pykx` — Python interface to kdb+
+- `pykx` — KDB-X Python library
 - `kdbx` — KDB-X AI libraries

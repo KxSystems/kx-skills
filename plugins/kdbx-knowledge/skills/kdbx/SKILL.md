@@ -13,7 +13,7 @@ Unified compute engine: time-series analytics + vector search + GPU-accelerated 
 |------|-------|
 | KDB-X modules, AI libs, Parquet, kURL, GPU, objstor | **This skill** |
 | q language syntax, operators, table queries | `/q` |
-| PyKX Python-to-kdb+ integration | `/pykx` |
+| KDB-X Python library | `/pykx` |
 | KDB.AI cloud vector database | `/kdbai` |
 
 ## Module Loading
@@ -124,6 +124,6 @@ s)SELECT AVG(price) FROM trades WHERE sym='AAPL' GROUP BY time/5 / SQL
 ## Related skills
 
 - `q` — q language syntax
-- `pykx` — Python interface to kdb+
+- `pykx` — KDB-X Python library
 - `kdbai` — KDB.AI vector database
 - `kxmeta-author` / `kxmeta-discover` — `aimeta` annotation authoring and discovery

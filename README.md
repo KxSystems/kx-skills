@@ -1,7 +1,7 @@
 # KX Plugins for Claude Code
 
 Public marketplace of [Claude Code](https://docs.claude.com/en/docs/claude-code/overview)
-plugins for working with KX products: kdb+/q, PyKX, kdb-X, KDB.AI, and KX Insights Enterprise.
+plugins for working with KX products: kdb+/q, KDB-X Python, KDB-X, KDB.AI, and KX Insights Enterprise.
 
 Each plugin packages one or more Skills — a folder of markdown that Claude loads
 automatically when it recognises a relevant task. Skills teach Claude
@@ -15,8 +15,8 @@ gets consistent, high-quality results.
 | Plugin       | What it does                                                      | When it triggers |
 |--------------|-------------------------------------------------------------------|------------------|
 | [`q-knowledge`](./plugins/q-knowledge/)                  | kdb+/q language support — idiomatic q, qsql, IPC, kdb+ workflows; also `/qlint-snippet` for KX qlint | Writing q code, querying kdb+ tables, lint checks |
-| [`pykx-knowledge`](./plugins/pykx-knowledge/skills/pykx/) | PyKX — using kdb+/q from Python, type conversions, API guidance  | Working with PyKX, Python-kdb+ integration |
-| [`kdbx-knowledge`](./plugins/kdbx-knowledge/) | kdb-X workflows, `aimeta` metadata authoring + discovery, and the KDB-X DB Service (setup, ingest, query, troubleshooting) | KDB-X platform, AI-native vector search, writing/reading aimeta annotations, DB Service ingest & queries |
+| [`pykx-knowledge`](./plugins/pykx-knowledge/skills/pykx/) | KDB-X Python — using kdb+/q from Python, type conversions, API guidance  | Working with KDB-X and Python |
+| [`kdbx-knowledge`](./plugins/kdbx-knowledge/) | KDB-X workflows, `aimeta` metadata authoring + discovery, and the KDB-X DB Service (setup, ingest, query, troubleshooting) | KDB-X platform, AI-native vector search, writing/reading aimeta annotations, DB Service ingest & queries |
 | [`kdbai-knowledge`](./plugins/kdbai-knowledge/skills/kdbai/) | KDB.AI vector database — schema, hybrid search, AI integration   | Building vector search or RAG with KDB.AI |
 | [`kdbie-knowledge`](./plugins/kdbie-knowledge/) | KX Insights Enterprise — kxi CLI admin + Stream Processor pipelines | Using kxi to build/deploy packages, manage IE, or writing SP pipelines |
 
@@ -72,7 +72,7 @@ kx-skills/
     │           └── scripts/run.sh
     ├── pykx-knowledge/
     │   ├── .claude-plugin/plugin.json
-    │   └── skills/pykx/             ← PyKX Python-kdb+ interface
+    │   └── skills/pykx/             ← KDB-X Python library
     │       ├── SKILL.md
     │       └── reference.md
     ├── kdbx-knowledge/

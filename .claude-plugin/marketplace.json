@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "kx-skills",
-  "description": "Public KX skills for Claude Code — kdb+/q, PyKX, kdb-X, KDB.AI, and KX Insights Enterprise",
+  "description": "Public KX skills for Claude Code — kdb+/q, KDB-X Python, KDB-X, KDB.AI, and KX Insights Enterprise",
   "owner": {
     "name": "KX",
     "email": "librarian@kx.com"
@@ -16,14 +16,14 @@
     },
     {
       "name": "pykx-knowledge",
-      "description": "PyKX workflows — using kdb+/q from Python, conversions between Python and q types, and PyKX API guidance",
+      "description": "KDB-X Python workflows — using kdb+/q from Python, conversions between Python and q types, and KDB-X Python API guidance",
       "source": "./plugins/pykx-knowledge",
       "category": "development",
       "homepage": "https://github.com/KxSystems/kx-skills/tree/main/plugins/pykx-knowledge"
     },
     {
       "name": "kdbx-knowledge",
-      "description": "kdb-X workflows and patterns for the next-generation KX time-series database",
+      "description": "KDB-X workflows and patterns for the next-generation KX time-series database",
       "source": "./plugins/kdbx-knowledge",
       "category": "development",
       "homepage": "https://github.com/KxSystems/kx-skills/tree/main/plugins/kdbx-knowledge"

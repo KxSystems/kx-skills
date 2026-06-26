@@ -1,4 +1,4 @@
-# PyKX Reference
+# KDB-X Python (pykx) Reference
 
 ## Query API
 
@@ -256,7 +256,7 @@ License types: `kc.lic` (default, personal/commercial), `k4.lic`, `kx.lic`
 | `PYKX_ALLOCATOR` | NEP-49 allocator for efficient NumPy conversions |
 | `PYKX_GC` | Trigger q garbage collector on array deallocation |
 | `QARGS` | Command-line flags to pass to q |
-| `QINIT` | Additional .q file loaded after PyKX init |
+| `QINIT` | Additional .q file loaded after KDB-X Python init |
 
 ---
 
@@ -264,7 +264,7 @@ License types: `kc.lic` (default, personal/commercial), `k4.lic`, `kx.lic`
 
 ### Atoms
 
-| q type | PyKX type | Python (.py()) | NumPy dtype |
+| q type | pykx type | Python (.py()) | NumPy dtype |
 |--------|-----------|----------------|-------------|
 | boolean | BooleanAtom | bool | bool |
 | byte | ByteAtom | int | uint8 |
@@ -286,7 +286,7 @@ License types: `kc.lic` (default, personal/commercial), `k4.lic`, `kx.lic`
 
 ### Collections
 
-| q type | PyKX type | Python (.py()) | Pandas (.pd()) |
+| q type | pykx type | Python (.py()) | Pandas (.pd()) |
 |--------|-----------|----------------|----------------|
 | list | List | list | object Series |
 | dict | Dictionary | dict | — |
@@ -306,7 +306,7 @@ kx.Table(data=pandas_df)                # Table from DataFrame
 
 ## Sources
 
-- [PyKX Overview](https://code.kx.com/pykx/)
+- [KDB-X Python Overview](https://code.kx.com/pykx/)
 - [Query API](https://code.kx.com/pykx/api/query.html)
 - [Column Class](https://code.kx.com/pykx/api/columns.html)
 - [IPC Interface](https://code.kx.com/pykx/api/ipc.html)
