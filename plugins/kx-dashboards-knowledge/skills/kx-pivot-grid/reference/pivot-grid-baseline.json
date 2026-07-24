@@ -1,0 +1,543 @@
+{
+  "id": "573a9f4a-e0b6-a976-9fff-795ab4b746ba",
+  "name": "Sample Pivot Grid for AI Skill",
+  "creationDate": "Thu, 04 Jun 2026 20:34:16 GMT",
+  "lastUpdateDate": "Thu, 04 Jun 2026 22:08:39 GMT",
+  "thumb": null,
+  "screenDetails": [
+    {
+      "label": "Screen 1",
+      "value": "1bff14ff-0283-f73e-5322-b9e168fa7b5f"
+    }
+  ],
+  "screens": [
+    {
+      "id": "1bff14ff-0283-f73e-5322-b9e168fa7b5f",
+      "name": "Screen 1",
+      "thumb": null,
+      "widgets": [
+        {
+          "id": "78aba7ce-0b80-8a09-9f9b-061622af7d36",
+          "layout": {
+            "row": 0,
+            "column": 0,
+            "rowSpan": 18,
+            "colSpan": 36
+          },
+          "component": {
+            "id": "253f932b-90ef-d2f5-7e4e-1e4db83c4be5",
+            "key": "Datatable",
+            "options": {
+              "version": "v2.16.0",
+              "Basics": {
+                "Name": "",
+                "Focus": "",
+                "Drilldown": true,
+                "Data": {
+                  "_dashboardsType": "data",
+                  "value": "pivotQuery"
+                },
+                "ShowTools": true,
+                "Animate": true,
+                "MultipleDrilldown": false,
+                "DrilldownInputArea": "Breakdown Cell",
+                "ExpandAll": false,
+                "ShowExpandedSummary": false,
+                "AggregateFunctionTooltip": true,
+                "SortColumn": "",
+                "SortOrder": "",
+                "ScrollValue": "",
+                "ShowCache": false,
+                "UseCache": true,
+                "EnableCustomLayoutConfiguration": false,
+                "ColumnWidthMode": "Relative"
+              },
+              "Selection": {
+                "RowSelectionMode": "none",
+                "RowSelectionColumn": "",
+                "SelectedValue": ""
+              },
+              "Actions": [],
+              "HighlightRules": [],
+              "FileExport": {
+                "ShowExportCsvButton": true,
+                "ShowExportExcelButton": true,
+                "ShowFullExportButton": false,
+                "FullExportOverride": "",
+                "RawFormat": false,
+                "FileName": [],
+                "Actions": []
+              },
+              "BreakdownColumnsConfiguration": [
+                {
+                  "Field": "sym",
+                  "DisplayName": "sym",
+                  "Tooltip": "",
+                  "TextAlign": "left",
+                  "Sortable": true,
+                  "Format": "General",
+                  "Precision": 2,
+                  "HideTrailingZeroes": false,
+                  "Currency": "none",
+                  "DateFormat": "YYYY-MM-DD",
+                  "TimeFormat": "HH:mm:ss",
+                  "WidthWeight": 1,
+                  "MinWidth": 1,
+                  "FixedWidth": 150,
+                  "PercentageColorOverride": "",
+                  "isBreakdown": false,
+                  "NoDisplay": false,
+                  "Template": ""
+                },
+                {
+                  "Field": "src",
+                  "DisplayName": "src",
+                  "Tooltip": "",
+                  "TextAlign": "center",
+                  "Sortable": true,
+                  "Format": "General",
+                  "Precision": 2,
+                  "HideTrailingZeroes": false,
+                  "Currency": "none",
+                  "DateFormat": "YYYY-MM-DD",
+                  "TimeFormat": "HH:mm:ss",
+                  "WidthWeight": 1,
+                  "MinWidth": 1,
+                  "FixedWidth": 150,
+                  "PercentageColorOverride": "",
+                  "isBreakdown": false,
+                  "NoDisplay": false,
+                  "Template": ""
+                }
+              ],
+              "_BreakdownColumnsConfiguration": [
+                {
+                  "Field": "sym",
+                  "DisplayName": "sym",
+                  "Tooltip": "",
+                  "TextAlign": "left",
+                  "Sortable": true,
+                  "Format": "General",
+                  "Precision": 2,
+                  "HideTrailingZeroes": false,
+                  "Currency": "none",
+                  "DateFormat": "YYYY-MM-DD",
+                  "TimeFormat": "HH:mm:ss",
+                  "WidthWeight": 1,
+                  "MinWidth": 1,
+                  "FixedWidth": 150,
+                  "PercentageColorOverride": "",
+                  "isBreakdown": false,
+                  "NoDisplay": false,
+                  "Template": ""
+                },
+                {
+                  "Field": "src",
+                  "DisplayName": "src",
+                  "Tooltip": "",
+                  "TextAlign": "center",
+                  "Sortable": true,
+                  "Format": "General",
+                  "Precision": 2,
+                  "HideTrailingZeroes": false,
+                  "Currency": "none",
+                  "DateFormat": "YYYY-MM-DD",
+                  "TimeFormat": "HH:mm:ss",
+                  "WidthWeight": 1,
+                  "MinWidth": 1,
+                  "FixedWidth": 150,
+                  "PercentageColorOverride": "",
+                  "isBreakdown": false,
+                  "NoDisplay": false,
+                  "Template": ""
+                }
+              ],
+              "datatablePossibleBreakdownColumns": [
+                "sym",
+                "src"
+              ],
+              "ColumnsConfiguration": [
+                {
+                  "Field": "size",
+                  "DisplayName": "size",
+                  "Tooltip": "",
+                  "WidthWeight": 1,
+                  "MinWidth": 1,
+                  "FixedWidth": 150,
+                  "TextAlign": "right",
+                  "Sortable": true,
+                  "Format": "Formatted Number",
+                  "Precision": 4,
+                  "HideTrailingZeroes": false,
+                  "Currency": "none",
+                  "DateFormat": "YYYY-MM-DD",
+                  "TimeFormat": "HH:mm:ss",
+                  "HighlightNegative": true,
+                  "HighlightNegativeColor": "",
+                  "HighlightChanges": false,
+                  "HighlightChangeDuration": 200,
+                  "ShowArrowsOnChange": false,
+                  "HighlightMinValue": false,
+                  "HighlightMinValueColor": "",
+                  "HighlightMaxValue": false,
+                  "HighlightMaxValueColor": "",
+                  "PercentageColorOverride": "",
+                  "RangeHighlight": false,
+                  "InvertRangeColor": false,
+                  "RangeHighlightColor": "",
+                  "isBreakdown": false,
+                  "Hidden": false,
+                  "Footer": "None",
+                  "FooterWeights": "",
+                  "Template": ""
+                },
+                {
+                  "Field": "price",
+                  "DisplayName": "price",
+                  "Tooltip": "",
+                  "WidthWeight": 1,
+                  "MinWidth": 1,
+                  "FixedWidth": 150,
+                  "TextAlign": "right",
+                  "Sortable": true,
+                  "Format": "Formatted Number",
+                  "Precision": 4,
+                  "HideTrailingZeroes": false,
+                  "Currency": "none",
+                  "DateFormat": "YYYY-MM-DD",
+                  "TimeFormat": "HH:mm:ss",
+                  "HighlightNegative": true,
+                  "HighlightNegativeColor": "",
+                  "HighlightChanges": false,
+                  "HighlightChangeDuration": 200,
+                  "ShowArrowsOnChange": false,
+                  "HighlightMinValue": false,
+                  "HighlightMinValueColor": "",
+                  "HighlightMaxValue": false,
+                  "HighlightMaxValueColor": "",
+                  "PercentageColorOverride": "",
+                  "RangeHighlight": false,
+                  "InvertRangeColor": false,
+                  "RangeHighlightColor": "",
+                  "isBreakdown": false,
+                  "Hidden": false,
+                  "Footer": "None",
+                  "FooterWeights": "",
+                  "Template": ""
+                }
+              ],
+              "_ColumnsConfiguration": [
+                {
+                  "Field": "size",
+                  "DisplayName": "size",
+                  "Tooltip": "",
+                  "WidthWeight": 1,
+                  "MinWidth": 1,
+                  "FixedWidth": 150,
+                  "TextAlign": "right",
+                  "Sortable": true,
+                  "Format": "Formatted Number",
+                  "Precision": 4,
+                  "HideTrailingZeroes": false,
+                  "Currency": "none",
+                  "DateFormat": "YYYY-MM-DD",
+                  "TimeFormat": "HH:mm:ss",
+                  "HighlightNegative": true,
+                  "HighlightNegativeColor": "",
+                  "HighlightChanges": false,
+                  "HighlightChangeDuration": 200,
+                  "ShowArrowsOnChange": false,
+                  "HighlightMinValue": false,
+                  "HighlightMinValueColor": "",
+                  "HighlightMaxValue": false,
+                  "HighlightMaxValueColor": "",
+                  "PercentageColorOverride": "",
+                  "RangeHighlight": false,
+                  "InvertRangeColor": false,
+                  "RangeHighlightColor": "",
+                  "isBreakdown": false,
+                  "Hidden": false,
+                  "Footer": "None",
+                  "FooterWeights": "",
+                  "Template": ""
+                },
+                {
+                  "Field": "price",
+                  "DisplayName": "price",
+                  "Tooltip": "",
+                  "WidthWeight": 1,
+                  "MinWidth": 1,
+                  "FixedWidth": 150,
+                  "TextAlign": "right",
+                  "Sortable": true,
+                  "Format": "Formatted Number",
+                  "Precision": 4,
+                  "HideTrailingZeroes": false,
+                  "Currency": "none",
+                  "DateFormat": "YYYY-MM-DD",
+                  "TimeFormat": "HH:mm:ss",
+                  "HighlightNegative": true,
+                  "HighlightNegativeColor": "",
+                  "HighlightChanges": false,
+                  "HighlightChangeDuration": 200,
+                  "ShowArrowsOnChange": false,
+                  "HighlightMinValue": false,
+                  "HighlightMinValueColor": "",
+                  "HighlightMaxValue": false,
+                  "HighlightMaxValueColor": "",
+                  "PercentageColorOverride": "",
+                  "RangeHighlight": false,
+                  "InvertRangeColor": false,
+                  "RangeHighlightColor": "",
+                  "isBreakdown": false,
+                  "Hidden": false,
+                  "Footer": "None",
+                  "FooterWeights": "",
+                  "Template": ""
+                }
+              ],
+              "datatablePossibleColumns": [
+                "price",
+                "size"
+              ],
+              "Style": {
+                "advanced": "",
+                "cssClasses": "",
+                "Theme": "Dark",
+                "EvenRowBackgroundColorOverride": "#282828",
+                "OddRowBackgroundColorOverride": "#303030",
+                "SelectedRowBackgroundColor": "#505050",
+                "ExpandedSummaryStyle": false,
+                "ShowFilterIconInFooter": true,
+                "RowHeight": 30,
+                "HeaderRowHeight": 30,
+                "HeaderTextTransformation": "none",
+                "HeaderFontWeight": "",
+                "FontFamily": "",
+                "FontSize": ""
+              },
+              "Alignment": {
+                "paddingLeft": 0,
+                "paddingRight": 0,
+                "paddingTop": 0,
+                "paddingBottom": 0,
+                "innerPaddingLeft": 0,
+                "innerPaddingRight": 0,
+                "innerPaddingTop": 0,
+                "innerPaddingBottom": 0,
+                "titlePaddingLeft": 0,
+                "titlePaddingRight": 0,
+                "titlePaddingTop": 7,
+                "titlePaddingBottom": 7
+              },
+              "format": {
+                "titleFontSize": 16,
+                "titleHorizontal": "Center",
+                "titleShadow": false,
+                "tileBorderWidth": 0,
+                "tileBorderRounding": 0,
+                "tileBorderColor": "#000000",
+                "tileBackgroundColor": "#000000",
+                "tileTransparentBackground": true,
+                "tileShadow": false
+              },
+              "selectedColumnPossibleValues": [
+                "sym",
+                "src",
+                "size",
+                "price"
+              ],
+              "highlightTargetPossibleValues": [
+                "sym",
+                "src",
+                "size",
+                "price",
+                "*"
+              ],
+              "highlightColumnsPossibleValues": [
+                "{breakdownId}",
+                "sym",
+                "src",
+                "size",
+                "price"
+              ]
+            },
+            "containerId": null,
+            "components": [],
+            "widgets": [],
+            "definitionId": "3",
+            "hasOnSettingsChange": true
+          }
+        }
+      ],
+      "relativeHeight": true,
+      "rowCount": 24,
+      "rowHeight": 25,
+      "colCount": 36,
+      "floatable": true,
+      "isDefault": true
+    }
+  ],
+  "popups": [],
+  "tags": [],
+  "dashboardTheme": "Dark",
+  "themeSwitchable": true,
+  "saveTimestamp": null,
+  "relativeHeight": true,
+  "rowCount": 24,
+  "rowHeight": 25,
+  "colCount": 36,
+  "floatable": true,
+  "viewState": {
+    "selected": {
+      "_viewType": true,
+      "_default": "0",
+      "_type": "symbol"
+    },
+    ".settings": {},
+    "_settings": {
+      "dashboardUser": {
+        "_viewType": true,
+        "_type": "symbol",
+        "_default": ""
+      },
+      "dashboardTimezone": {
+        "_viewType": true,
+        "_type": "symbol",
+        "_default": ""
+      },
+      "dashboardUrl": {
+        "_viewType": true,
+        "_type": "string",
+        "_default": ""
+      },
+      "dashboardTitle": {
+        "_viewType": true,
+        "_type": "symbol",
+        "_default": ""
+      },
+      "dashboardStartTimestamp": {
+        "_viewType": true,
+        "_type": "timestamp",
+        "_default": "",
+        "_rolling": true
+      },
+      "dashboardAvailableMemoryThreshold": {
+        "_viewType": true,
+        "_type": "int",
+        "_default": 0
+      },
+      "dashboardQueriesTestResults": {
+        "_viewType": true,
+        "_type": "symbol",
+        "_default": "[]"
+      }
+    }
+  },
+  "data": {
+    "pivotQuery": {
+      "_pagingType": "NONE",
+      "_autoExecute": true,
+      "_autoExec": true,
+      "_columns": [
+        "sym",
+        "size",
+        "price"
+      ],
+      "_dataType": "query",
+      "_dataSource": "kdb",
+      "_connection": "html5evalcongroup",
+      "_connection_Viewstate": "",
+      "_mappings": {
+        "key": "sym",
+        "mappings": {},
+        "value": "sym"
+      },
+      "_maxRows": 2000,
+      "_subscriptionType": "static",
+      "_subscriptionInterval": 3,
+      "_layout": [
+        {
+          "isExpanded": true,
+          "weight": 2
+        },
+        {
+          "isExpanded": true,
+          "weight": 1
+        },
+        {
+          "isExpanded": false,
+          "weight": 1
+        },
+        {
+          "isExpanded": true,
+          "weight": 0
+        },
+        {
+          "isExpanded": true,
+          "weight": 2
+        }
+      ],
+      "_queryString": "dfxTrade",
+      "_queryParams": [],
+      "_subscriptionKey": "",
+      "_hasUpdateQuery": false,
+      "_updateQueryParams": [],
+      "_updateQueryString": "",
+      "_updateType": "query",
+      "_aggregateCols": [
+        "size",
+        "price"
+      ],
+      "_aggregateFns": [
+        "avg",
+        "sum"
+      ],
+      "_aggregateLabels": [
+        "",
+        ""
+      ],
+      "_breakdownCols": [
+        "sym",
+        "src"
+      ],
+      "_columnLabel": "",
+      "_pivotSource": "query",
+      "_pivotType": "server",
+      "_table": "",
+      "_aggFn": "avg",
+      "_topX": "",
+      "_ordering": "",
+      "_from": "",
+      "_to": ""
+    }
+  },
+  "permissionEntity": null,
+  "worksheetPadding": 10,
+  "widgetsSpacing": 0,
+  "borderColor": "000000",
+  "borderBackground": "000000",
+  "transparentBackground": true,
+  "borderWidth": 0,
+  "borderRounding": 0,
+  "borderSpacing": 0,
+  "borderShadow": false,
+  "saveViewerState": "enabled",
+  "hostnameAccess": "",
+  "hidePdfGlobalVS": false,
+  "hierarchicalRules": {
+    "ChartHierarchicalRules": [],
+    "GridHierarchicalRules": []
+  },
+  "hash": "573a9f4a-e0b6-a976-9fff-795ab4b746ba",
+  "enableShareDashboard": false,
+  "notifications": null,
+  "showLoadingIndicators": true,
+  "unsavedViewerPrompt": false,
+  "mainMenuButton": "Show",
+  "advancedCss": "",
+  "cssClasses": "",
+  "version": "v2.16.0",
+  "shortcuts": [],
+  "wasChanged": false
+}
