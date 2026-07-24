@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "kx-skills",
-  "description": "Public KX skills for Claude Code — kdb+/q, KDB-X Python, KDB-X, KDB.AI, and KX Insights Enterprise",
+  "description": "Public KX skills for Claude Code — kdb+/q, KDB-X Python, KDB-X, KDB.AI, KX Insights Enterprise, and KX Dashboards",
   "owner": {
     "name": "KX",
     "email": "librarian@kx.com"
@@ -41,6 +41,13 @@
       "source": "./plugins/kdbie-knowledge",
       "category": "development",
       "homepage": "https://github.com/KxSystems/kx-skills/tree/main/plugins/kdbie-knowledge"
+    },
+    {
+      "name": "kx-dashboards-knowledge",
+      "description": "KX Dashboards component knowledge for generating schema-valid dashboard JSON from natural language. Bundles kx-dashboard-core (the dashboard envelope, data sources, ViewState, binding, actions and pre-flight checklist) plus per-component skills (Datagrid, Pivot Grid, ChartGL, Maps, Forms, Gauge, and more).",
+      "source": "./plugins/kx-dashboards-knowledge",
+      "category": "development",
+      "homepage": "https://github.com/KxSystems/kx-skills/tree/main/plugins/kx-dashboards-knowledge"
     }
   ]
 }

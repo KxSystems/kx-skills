@@ -1,7 +1,7 @@
 # KX Plugins for Claude Code
 
 Public marketplace of [Claude Code](https://docs.claude.com/en/docs/claude-code/overview)
-plugins for working with KX products: kdb+/q, KDB-X Python, KDB-X, KDB.AI, and KX Insights Enterprise.
+plugins for working with KX products: kdb+/q, KDB-X Python, KDB-X, KDB.AI, KX Insights Enterprise, and KX Dashboards.
 
 Each plugin packages one or more Skills — a folder of markdown that Claude loads
 automatically when it recognises a relevant task. Skills teach Claude
@@ -19,6 +19,7 @@ gets consistent, high-quality results.
 | [`kdbx-knowledge`](./plugins/kdbx-knowledge/) | KDB-X workflows, `aimeta` metadata authoring + discovery, and the KDB-X DB Service (setup, ingest, query, troubleshooting) | KDB-X platform, AI-native vector search, writing/reading aimeta annotations, DB Service ingest & queries |
 | [`kdbai-knowledge`](./plugins/kdbai-knowledge/skills/kdbai/) | KDB.AI vector database — schema, hybrid search, AI integration   | Building vector search or RAG with KDB.AI |
 | [`kdbie-knowledge`](./plugins/kdbie-knowledge/) | KX Insights Enterprise — kxi CLI admin + Stream Processor pipelines | Using kxi to build/deploy packages, manage IE, or writing SP pipelines |
+| [`kx-dashboards-knowledge`](./plugins/kx-dashboards-knowledge/) | KX Dashboards — generate schema-valid dashboard JSON from natural language (core + per-component skills) | Building KX Dashboards, generating dashboard components/JSON |
 
 ---
 
@@ -38,6 +39,7 @@ In Claude Code, add the marketplace:
 /plugin install kdbx-knowledge@kx-skills
 /plugin install kdbai-knowledge@kx-skills
 /plugin install kdbie-knowledge@kx-skills
+/plugin install kx-dashboards-knowledge@kx-skills
 ```
 
 Or browse interactively with `/plugin` and pick from the **Discover** tab.
@@ -99,13 +101,24 @@ kx-skills/
     │   └── skills/kdbai/            ← KDB.AI vector database
     │       ├── SKILL.md
     │       └── reference.md
-    └── kdbie-knowledge/
+    ├── kdbie-knowledge/
+    │   ├── .claude-plugin/plugin.json
+    │   └── skills/
+    │       ├── kdbie-dev/          ← kxi CLI admin (packages, install, logs)
+    │       │   └── SKILL.md
+    │       └── pipeline-dev/       ← Stream Processor pipeline authoring
+    │           └── SKILL.md
+    └── kx-dashboards-knowledge/    ← KX Dashboards NLX skill set (32 skills)
         ├── .claude-plugin/plugin.json
+        ├── README.md
         └── skills/
-            ├── kdbie-dev/          ← kxi CLI admin (packages, install, logs)
-            │   └── SKILL.md
-            └── pipeline-dev/       ← Stream Processor pipeline authoring
-                └── SKILL.md
+            ├── kx-dashboard-core/  ← foundation skill — load first
+            │   ├── SKILL.md
+            │   └── generate.js     ← dashboard-JSON generator script
+            ├── kx-datagrid/        ← one folder per component skill
+            │   ├── SKILL.md
+            │   └── reference/      ← detail split out of SKILL.md
+            └── ...                 ← 32 component skills (most with reference/)
 ```
 
 ---
