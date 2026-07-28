@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "OneTick-Cloud": {
+      "type": "http",
+      "url": "https://skills-mcp.cloud.onetick.com/mcp"
+    }
+  }
+}
