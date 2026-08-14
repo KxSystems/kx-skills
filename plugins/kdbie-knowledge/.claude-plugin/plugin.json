@@ -1,6 +1,6 @@
 {
   "name": "kdbie-knowledge",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "KX Insights Enterprise workflows — kxi CLI administration (package build/deploy, install/upgrade, logs) and Stream Processor pipeline authoring",
   "author": {
     "name": "KX",

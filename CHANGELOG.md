@@ -5,6 +5,15 @@ release, dated, listing the plugins that changed and their versions. Plugins are
 versioned independently ([SemVer](https://semver.org)) — there is no single
 marketplace version.
 
+## [2026-08-14]
+
+- **q-knowledge 0.1.1** — bundle the shared Kapa.ai KX documentation MCP server. (#16)
+- **pykx-knowledge 0.1.1** — bundle the shared Kapa.ai KX documentation MCP server. (#16)
+- **kdbx-knowledge 0.2.1** — bundle the shared Kapa.ai KX documentation MCP server. (#16)
+- **kdbai-knowledge 0.1.1** — bundle the shared Kapa.ai KX documentation MCP server. (#16)
+- **kdbie-knowledge 0.1.1** — bundle the shared Kapa.ai KX documentation MCP server. (#16)
+- **kx-dashboards-knowledge 0.1.1** — bundle the shared Kapa.ai KX documentation MCP server. (#16)
+
 ## [2026-07-28]
 
 - **onetick-knowledge 0.1.0** — new plugin: query OneTick market and reference data
