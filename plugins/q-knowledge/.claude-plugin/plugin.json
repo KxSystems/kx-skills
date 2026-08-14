@@ -1,6 +1,6 @@
 {
   "name": "q-knowledge",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "kdb+/q language support — idiomatic q, qsql, IPC, kdb+ workflows, and KX qlint integration via /qlint-snippet",
   "author": {
     "name": "KX",

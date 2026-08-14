@@ -4,6 +4,10 @@ A Claude Code plugin for building KX Dashboards from natural language. It bundle
 component-focused skills used to generate schema-valid dashboard JSON for grids,
 charts, maps, forms, containers, actions, and related dashboard features.
 
+## Documentation search (MCP)
+
+This plugin bundles the **`kx-docs-mcp`** server (registered automatically on install as `plugin:kx-dashboards-knowledge:kx-docs-mcp`). Claude uses it to search KX product documentation. It needs no setup or authentication on your part — the connection is preconfigured. Confirm it after install with `/mcp`.
+
 ## Install
 
 From inside Claude Code, with the `kx-skills` marketplace already added:

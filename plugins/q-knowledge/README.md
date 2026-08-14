@@ -5,6 +5,10 @@ Claude Code plugin for kdb+/q development. Two skills:
 - **`q`** — kdb+/q language support: idiomatic q, qsql, IPC, common errors, Python-to-q translation. Pure knowledge, auto-triggered when Claude detects q-related work. No external dependencies.
 - **`qlint-snippet`** — wrapper around [KX qlint](https://code.kx.com/insights/1.13/qlint/). Lint a single q/kdb+ snippet. Slash command `/qlint-snippet` plus auto-trigger on phrases like "lint this q code". **Requires `QLINT_DIR` env var and `q` on PATH — see Prerequisites below.**
 
+## Documentation search (MCP)
+
+This plugin bundles the **`kx-docs-mcp`** server (registered automatically on install as `plugin:q-knowledge:kx-docs-mcp`). Claude uses it to search KX product documentation and technical content sources. It needs no setup or authentication on your part — the connection is preconfigured. Confirm it after install with `/mcp`.
+
 ## Install
 
 From inside Claude Code, with the `kx-skills` marketplace already added:

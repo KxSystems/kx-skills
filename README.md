@@ -46,8 +46,8 @@ In Claude Code, add the marketplace:
 
 Or browse interactively with `/plugin` and pick from the **Discover** tab.
 
-> `onetick-knowledge` bundles an MCP server, so run `/reload-plugins` after installing it to
-> activate the server without a full session restart.
+> Every plugin bundles an MCP server. Run `/reload-plugins` after installation to activate
+> it without a full session restart.
 
 ### Update later
 
