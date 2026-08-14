@@ -7,12 +7,12 @@ marketplace version.
 
 ## [2026-08-14]
 
-- **q-knowledge 0.1.1** — bundle the shared Kapa.ai KX documentation MCP server. (#TBD)
-- **pykx-knowledge 0.1.1** — bundle the shared Kapa.ai KX documentation MCP server. (#TBD)
-- **kdbx-knowledge 0.2.1** — bundle the shared Kapa.ai KX documentation MCP server. (#TBD)
-- **kdbai-knowledge 0.1.1** — bundle the shared Kapa.ai KX documentation MCP server. (#TBD)
-- **kdbie-knowledge 0.1.1** — bundle the shared Kapa.ai KX documentation MCP server. (#TBD)
-- **kx-dashboards-knowledge 0.1.1** — bundle the shared Kapa.ai KX documentation MCP server. (#TBD)
+- **q-knowledge 0.1.1** — bundle the shared Kapa.ai KX documentation MCP server. (#16)
+- **pykx-knowledge 0.1.1** — bundle the shared Kapa.ai KX documentation MCP server. (#16)
+- **kdbx-knowledge 0.2.1** — bundle the shared Kapa.ai KX documentation MCP server. (#16)
+- **kdbai-knowledge 0.1.1** — bundle the shared Kapa.ai KX documentation MCP server. (#16)
+- **kdbie-knowledge 0.1.1** — bundle the shared Kapa.ai KX documentation MCP server. (#16)
+- **kx-dashboards-knowledge 0.1.1** — bundle the shared Kapa.ai KX documentation MCP server. (#16)
 
 ## [2026-07-28]
 
