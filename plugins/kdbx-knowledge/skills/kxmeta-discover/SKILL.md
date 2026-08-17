@@ -83,7 +83,7 @@ kx-meta discover host:port | jq .tier
 
 | `tier` | What's populated                                                |
 |--------|----------------------------------------------------------------|
-| `3`    | Full annotated `meta.json` — `desc`, `examples`, `uses`, `references` all live. |
+| `3`    | Full annotated `meta.json` — `desc`, `examples`, `uses`, optional `authorize`, and `references` all live. |
 | `2`    | Same shape as tier 3, served over qIPC.                         |
 | `1`    | `tables[]` with names + columns only; `functions[]` with names + arity only; `references[]` empty; all `desc` fields empty. |
 
@@ -125,6 +125,19 @@ If `tier < 2`, `references[]` is empty — fall back to asking the user for the 
 ### Function dependency lookup
 
 A function's `uses` field is its table dependency set. To answer "what schema does `.gw.vwap` need?", read `functions[].uses` and join to `tables[]` by name.
+
+### Authorization preflight
+
+Before proposing or invoking a function at Tier 2 or 3, inspect its optional
+`authorize` object. For example, `{"action":"read","resource":"data.instrument"}`
+describes a `read:data.instrument` grant, while `exec analytic` describes the
+higher-level `exec:analytic` capability.
+
+This is informative metadata, not proof of authorization or enforcement. Do
+not infer that the caller holds the grant, and do not infer that the function
+checks it. Ask the policy module or gateway to enforce the grant. If the field
+is absent, the requirement is unknown—not unrestricted. Tier 1 cannot provide
+the field.
 
 ## Practical patterns
 

@@ -5,6 +5,11 @@ release, dated, listing the plugins that changed and their versions. Plugins are
 versioned independently ([SemVer](https://semver.org)) — there is no single
 marketplace version.
 
+## [2026-08-17]
+
+- **kdbx-knowledge 0.3.0** — teach the aimeta authoring and discovery skills the
+  schema-v3 `@authorize` grant annotation and authorization preflight semantics. (#17)
+
 ## [2026-08-14]
 
 - **q-knowledge 0.1.1** — bundle the shared Kapa.ai KX documentation MCP server. (#16)

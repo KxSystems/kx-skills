@@ -1,6 +1,6 @@
 ---
 name: kxmeta-author
-description: Write qdoc annotations for `aimeta` so the compiler publishes tables and functions correctly. Mandatory `@kind`/`@name` markers, the chained `@col` modifier form, q-language traps that silently drop items, and the recompile loop. Use when adding or editing `/ @kind ...` annotation blocks in a q codebase that loads `aimeta`, or when annotated items aren't surfacing in `meta.json`. For the wire model & tag vocabulary see ../../reference/agent-guide.md.
+description: Writing qdoc annotations for `aimeta` so the compiler publishes tables and functions correctly. Mandatory `@kind`/`@name` markers, the chained `@col` modifier form, q-language traps that silently drop items, and the recompile loop. Use when adding or editing `/ @kind ...` annotation blocks in a q codebase that loads `aimeta`, or when annotated items aren't surfacing in `meta.json`. For the wire model & tag vocabulary see ../../reference/agent-guide.md.
 ---
 
 # Writing `aimeta` annotations
@@ -25,6 +25,7 @@ Every annotated item needs these. Without them the parser drops the item from `m
 - Annotation lines start with `/ @tag` at column 0. Indented `/` lines are code context, not annotations.
 - One tag per line. A blank line, a non-comment line, or a different binding ends the block.
 - Free-text fields run to end-of-line (`@desc`, `@param` description, `@returns` description, `@example`). Repeatable tags: `@param`, `@col`, `@example`, `@uses`, `@tag`, `@sampleRow` — every other tag appears at most once.
+- `@authorize` takes exactly two static tokens: `/ @authorize <action> <resource>`. Use `read data.<table>` for a direct data-read API and `exec analytic` for a higher-level analytic API. Do not put expressions or caller-specific values in either token.
 - Types use qdoc names inside `{...}` (`symbol`, `symbol[]`, `float`, `timestamp`), not q's single-char codes. The compiler maps to `s`/`f`/`p`/… when emitting `kdbType`.
 - Annotations sit **immediately above** the binding. A blank line between the block and the binding breaks the association.
 
@@ -63,17 +64,28 @@ These are q-tokeniser quirks, not annotation rules. Symptom: compiler runs clean
 
 ## Required tags on `@public` functions
 
-`@kind`, `@name`, `@desc`, `@returns`, one `@param` per declared argument. Recommended: `@example` (at least one), `@uses` (table dependencies — drives the cross-process publish graph). Optional: `@tag`.
+`@kind`, `@name`, `@desc`, `@returns`, one `@param` per declared argument. Recommended: `@example` (at least one), `@uses` (table dependencies — drives the cross-process publish graph), and `@authorize` when the intended grant is known. Optional: `@tag`.
+
+`@uses` and `@authorize` answer different questions. `@uses trade` records a
+dependency; `@authorize exec analytic` records the capability expected of the
+caller. Prefer `read data.trade` when the function is a direct read facade and
+`exec analytic` when it exposes a higher-level calculation. Do not invent a
+grant when the owning policy intent is unknown.
+
+The tag is informative only. `aimeta` neither checks the caller nor inserts a
+guard into the function. A policy-enforcement module or gateway must enforce
+the published action/resource pair. Computed or row-specific resources need
+explicit enforcement outside this static annotation model.
 
 ## Reference tables (vocabulary resolvers)
 
 A `@reference X` table is the canonical resolver for vocabulary `X`. It needs at least one `@attr:u` column (the key) and may carry `@label` columns (human-readable names). Other tables link to it via `@semanticType:X` on the joining column. See the worked example in [reference/agent-guide.md](../../reference/agent-guide.md) for the full pattern.
 
-Validation rules (not yet enforced by the compiler — follow them anyway):
+Reference-table rules:
 
 - `@reference X` requires the table to have a `@attr:u` column.
 - Two tables claiming `@reference X` for the same `X` is an error.
-- `@label` outside an `@reference` table is dropped.
+- `@label` outside an `@reference` table produces a warning but is still published.
 - `@reference X` ↔ `@semanticType X` is a *vocabulary* link; `@foreignRef T.C` is an *edge*. Independent — a column can carry both.
 
 ## Recompile and sanity-check
