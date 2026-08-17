@@ -44,6 +44,7 @@ These are the tags `aimeta` recognises on top of standard qdoc. Anything else is
 | `@public`       | function         | Opt-in. Functions are excluded from `meta.json` by default.           |
 | `@private`      | table            | Opt-out. Tables are included by default.                              |
 | `@uses`         | function         | Space-separated table names; may repeat. Drives the publish graph.    |
+| `@authorize`    | function         | One `action resource` pair; informative required grant, not enforcement. |
 | `@param`        | function         | `name {type} description` — one per declared argument.                |
 | `@returns`      | function         | `{type} description`. Required on `@public` functions.                |
 | `@example`      | function         | Opaque text; never executed. May repeat.                              |
@@ -95,8 +96,8 @@ A discovered `meta.json` always has this shape. Optional fields are marked; miss
 
 ```jsonc
 {
-  "schemaVersion": 2,
-  "compilerVersion": "0.1.0",           // semver; build of the compiler that produced this file
+  "schemaVersion": 3,
+  "compilerVersion": "0.2.0",           // semver; build of the compiler that produced this file
   "process": {
     "name": "gateway",                  // optional, informational
     "host": "...",                      // populated only when running
@@ -148,6 +149,7 @@ A discovered `meta.json` always has this shape. Optional fields are marked; miss
       "returns": {"type": "table", "desc": "..."},
       "examples": [".gw.vwap[`AAPL`MSFT; .z.d; 0D00:05:00]"],
       "uses": ["trade", "quote"],       // table dependencies
+      "authorize": {"action": "exec", "resource": "analytic"}, // optional; informative only
       "tags": []
     }
   ]
@@ -159,6 +161,7 @@ A discovered `meta.json` always has this shape. Optional fields are marked; miss
 - **`tables[]`** is the published surface. `private: true` items appear in `meta.json` but are flagged as internal — show them only when the agent task explicitly calls for them.
 - **`functions[]`** contains only `@public` functions. Private helpers are absent. Treat the list as the callable surface.
 - **`uses`** on a function is the table dependency set. To answer "what schema does this function need?" walk the function's `uses` and join to `tables[]` by name.
+- **`authorize`** is the grant a caller is expected to hold. Treat it as a preflight hint, not proof that the caller holds the grant or that the function enforces it. Absence means unspecified, not unrestricted; enforcement belongs to a policy module or gateway.
 - **`foreignRef`** on a column is a hard edge: `instrument.sym` means this column joins to `instrument.sym` on equality.
 - **`semanticType`** on a column is a *vocabulary* link, not a direct edge. Look up the matching entry in `references[]` to find the resolver table and key column. A column may carry both `semanticType` and `foreignRef` independently.
 - **`references[]`** is a denormalised lookup table. To translate a user-facing name (`"USD"`) for column `instrument.ccy`:
@@ -210,7 +213,7 @@ The home document has the shape:
 ```json
 {
   "service": "aimeta",
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "links": {
     "meta": "/meta",
     "openapi": "/openapi.json",
@@ -258,6 +261,7 @@ trade: ([] time:`timestamp$(); sym:`symbol$(); price:`float$())
 / @name .gw.vwap
 / @desc Volume-weighted average price for given symbols.
 / @public
+/ @authorize exec analytic
 / @param syms {symbol[]} Symbols to compute VWAP for.
 / @returns {table} `sym`vwap — symbol-keyed VWAP.
 / @example .gw.vwap[`AAPL`MSFT]
