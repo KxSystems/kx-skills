@@ -1,0 +1,18 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "kx-dashboards-knowledge",
+  "version": "0.1.1",
+  "description": "KX Dashboards component knowledge for generating schema-valid dashboard JSON from natural language. Bundles kx-dashboard-core (the dashboard envelope, data sources, ViewState, binding, actions and pre-flight checklist) plus per-component skills (Datagrid, Pivot Grid, ChartGL, Maps, Forms, Gauge, and more).",
+  "author": {
+    "name": "KX",
+    "email": "librarian@kx.com"
+  },
+  "homepage": "https://github.com/KxSystems/kx-skills/tree/main/plugins/kx-dashboards-knowledge",
+  "keywords": [
+    "kx",
+    "dashboards",
+    "nlx",
+    "skills",
+    "dashboard-generation"
+  ]
+}

@@ -122,7 +122,7 @@ table.drop()             # Delete (irreversible)
 | **ivf** | -- | `nclusters`(8), `metric`(L2) | Requires `table.train()` before insert |
 | **ivfpq** | -- | `nclusters`(8), `nbits`(8), `nsplits`(8), `metric`(L2) | Compressed, requires training |
 | **bm25** | -- | `k`(1.25), `b`(0.75) | Sparse keyword search, column type `general` |
-| **cagra** | `metric` | See [reference.md](reference.md) | GPU only, do NOT pass `dims` |
+| **cagra** | `dims`, `metric` | See [reference.md](reference.md) | GPU only |
 
 **Metrics:** `L2` (Euclidean, default), `CS` (Cosine), `IP` (Inner Product).
 
@@ -245,12 +245,13 @@ results = table.query(
 | "Index not found" | `vectors` key must match exact index name |
 | Filter not working | Operator FIRST: `("=", "col", val)` not `("col", "=", val)` |
 | Low HNSW recall | Increase `index_params={"idx": {"efSearch": 100}}` |
-| "missing arguments: dims" | HNSW/Flat need `dims`. CAGRA rejects it. |
+| "missing arguments: dims" | HNSW, Flat, and CAGRA all require `dims` in index params — provide it |
 | IVF returns empty | Must `table.train(df)` before insert |
 | Delete fails | Only works on no-index, flat, qFlat tables |
 
 ## Related skills
 
+- `sizing` — RAM/disk/GPU VRAM capacity planning for a deployment (index selection, CAGRA VRAM sizing, CPU/worker starting bands)
 - `q` — q language syntax
 - `pykx` — KDB-X Python library
 - `kdbx` — KDB-X AI libraries

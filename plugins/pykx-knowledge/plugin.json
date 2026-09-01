@@ -1,0 +1,11 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "pykx-knowledge",
+  "version": "0.1.1",
+  "description": "KDB-X Python (pykx) workflows — using kdb+/q from Python, conversions between Python and q types, and KDB-X Python API guidance",
+  "author": {
+    "name": "KX",
+    "email": "librarian@kx.com"
+  },
+  "homepage": "https://github.com/KxSystems/kx-skills/tree/main/plugins/pykx-knowledge"
+}

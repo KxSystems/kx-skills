@@ -1,4 +1,5 @@
 {
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "kdbai-knowledge",
   "version": "0.2.0",
   "description": "KDB.AI vector database — schema design, hybrid search, integration patterns, and vector-index sizing",
