@@ -1,0 +1,11 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "q-knowledge",
+  "version": "0.1.1",
+  "description": "kdb+/q language support — idiomatic q, qsql, IPC, kdb+ workflows, and KX qlint integration via /qlint-snippet",
+  "author": {
+    "name": "KX",
+    "email": "librarian@kx.com"
+  },
+  "homepage": "https://github.com/KxSystems/kx-skills/tree/main/plugins/q-knowledge"
+}

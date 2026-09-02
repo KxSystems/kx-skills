@@ -163,11 +163,11 @@ GPU-powered approximate nearest neighbor. Requires cuVS image (`kdbai-db:*-cuvs`
 
 ### Table Creation
 
-CAGRA **rejects** `dims` — it infers dimensionality from data:
+CAGRA requires `dims` in its index parameters:
 ```python
 indexes = [
     {"name": "idx", "type": "cagra", "column": "vector",
-     "params": {"metric": "CS"}}  # Do NOT include dims!
+     "params": {"metric": "CS", "dims": 1536}}
 ]
 table = db.create_table("gpu_table", schema=schema, indexes=indexes)
 ```
@@ -179,7 +179,7 @@ table = db.create_table("gpu_table", schema=schema, indexes=indexes)
 | `metric` | `L2` (0) | `L2`=0, `CS`=2, `IP`=6 |
 | `intermediate_graph_degree` | 128 | Degree during construction |
 | `graph_degree` | 64 | Final graph degree |
-| `build_algo` | `AUTO_SELECT` (0) | 0=auto, 1=IVF_PQ, 2=NN_DESCENT, 3=ITERATIVE |
+| `build_algo` | `AUTO_SELECT` | `AUTO_SELECT`, `IVF_PQ`, `NN_DESCENT`, or `ITERATIVE` |
 | `nn_descent_niter` | 20 | NN-Descent iterations |
 | `gpuid` | 0 | GPU device ID |
 
@@ -226,8 +226,7 @@ normalized:cuvs.cagra.normalize vectors;
 
 ### CAGRA Memory & Limits
 
-- **All vectors in GPU VRAM** — dataset must fit in GPU memory
-- A10G (24GB): ~1.5M vectors at 4096 dims (float32)
+- **All vectors in GPU VRAM** — dataset must fit in GPU memory. See the `sizing` skill (same plugin) for an index-payload estimate (`rows × dims × 4 + rows × graph_degree × 4`); CUDA/cuVS runtime, search workspace, and build peak require additional headroom
 - First insert calls `cuvsCagraBuild()`, subsequent use `cuvsCagraExtend()`
 - Insert rate degrades at scale (432 rows/s at 50K → 149 rows/s at 250K)
 - Filtering is post-filter: finds `itopk_size` neighbors then applies mask
@@ -238,7 +237,8 @@ normalized:cuvs.cagra.normalize vectors;
 
 | Error | Fix |
 |-------|-----|
-| "missing arguments: dims" | Do NOT pass `dims` to CAGRA — it infers from data |
+| "missing arguments: dims" | CAGRA requires `dims` in its index params (see Table Creation above) — it does not infer dimensionality from data |
+| "illegal memory access" on build (not after drop) | Fewer than `intermediate_graph_degree + 1` rows were present when CAGRA tried to build. This corrupts the CUDA context — every later GPU op fails until the container restarts. Accumulate enough rows first (default requires 129+) or use brute-force/CPU search until then |
 | "vectors type not supported: general list" | Use `[query.tolist()]` not `[[query.tolist()]]` |
 | "illegal memory access" after drop | Restart pod (`kubectl delete pod kdbai-0`) |
 | `insertFromPath` "not a valid index" | CAGRA not tracked in `.kdbaidense.indexes`, use Python client |

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
+  "mcpServers": {
+    "kx-docs-mcp": {
+      "type": "streamable-http",
+      "url": "https://kx2.mcp.kapa.ai",
+      "headers": {
+        "Authorization": "Bearer wqI5R2hC.QU7gdl8DILTPuggRS692GfPoTmo3afWS"
+      }
+    }
+  }
+}

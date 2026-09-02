@@ -1,0 +1,11 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "kdbie-knowledge",
+  "version": "0.1.1",
+  "description": "KX Insights Enterprise workflows — kxi CLI administration (package build/deploy, install/upgrade, logs) and Stream Processor pipeline authoring",
+  "author": {
+    "name": "KX",
+    "email": "librarian@kx.com"
+  },
+  "homepage": "https://github.com/KxSystems/kx-skills/tree/main/plugins/kdbie-knowledge"
+}

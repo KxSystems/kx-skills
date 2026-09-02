@@ -12,6 +12,10 @@
       "description": "kdb+/q language support — idiomatic q, qsql, IPC, kdb+ workflows, and KX qlint integration via /qlint-snippet",
       "source": "./plugins/q-knowledge",
       "category": "development",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "homepage": "https://github.com/KxSystems/kx-skills/tree/main/plugins/q-knowledge"
     },
     {
@@ -19,6 +23,10 @@
       "description": "KDB-X Python (pykx) workflows — using kdb+/q from Python, conversions between Python and q types, and KDB-X Python API guidance",
       "source": "./plugins/pykx-knowledge",
       "category": "development",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "homepage": "https://github.com/KxSystems/kx-skills/tree/main/plugins/pykx-knowledge"
     },
     {
@@ -26,13 +34,21 @@
       "description": "KDB-X workflows and patterns for the next-generation KX time-series database",
       "source": "./plugins/kdbx-knowledge",
       "category": "development",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "homepage": "https://github.com/KxSystems/kx-skills/tree/main/plugins/kdbx-knowledge"
     },
     {
       "name": "kdbai-knowledge",
-      "description": "KDB.AI vector database — schema design, hybrid search, and integration patterns for AI applications",
+      "description": "KDB.AI vector database — schema design, hybrid search, integration patterns, and vector-index sizing",
       "source": "./plugins/kdbai-knowledge",
       "category": "development",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "homepage": "https://github.com/KxSystems/kx-skills/tree/main/plugins/kdbai-knowledge"
     },
     {
@@ -40,6 +56,10 @@
       "description": "KX Insights Enterprise workflows — kxi CLI administration (package build/deploy, install/upgrade, logs) and Stream Processor pipeline authoring",
       "source": "./plugins/kdbie-knowledge",
       "category": "development",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "homepage": "https://github.com/KxSystems/kx-skills/tree/main/plugins/kdbie-knowledge"
     },
     {
@@ -47,6 +67,10 @@
       "description": "KX Dashboards component knowledge for generating schema-valid dashboard JSON from natural language. Bundles kx-dashboard-core (the dashboard envelope, data sources, ViewState, binding, actions and pre-flight checklist) plus per-component skills (Datagrid, Pivot Grid, ChartGL, Maps, Forms, Gauge, and more).",
       "source": "./plugins/kx-dashboards-knowledge",
       "category": "development",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "homepage": "https://github.com/KxSystems/kx-skills/tree/main/plugins/kx-dashboards-knowledge"
     },
     {
@@ -54,6 +78,10 @@
       "description": "Query OneTick market and reference data from Claude — MCP for SQL discovery/composition, onetick-py WebAPI wheel for execution over Arrow",
       "source": "./plugins/onetick-knowledge",
       "category": "development",
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
       "homepage": "https://github.com/KxSystems/kx-skills/tree/main/plugins/onetick-knowledge"
     }
   ]

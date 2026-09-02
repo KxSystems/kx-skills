@@ -1,0 +1,21 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "onetick-knowledge",
+  "version": "0.1.0",
+  "description": "Query OneTick market and reference data from Claude — MCP for SQL discovery/composition, onetick-py WebAPI wheel for execution over Arrow",
+  "author": {
+    "name": "KX",
+    "email": "librarian@kx.com"
+  },
+  "homepage": "https://github.com/KxSystems/kx-skills/tree/main/plugins/onetick-knowledge",
+  "keywords": [
+    "onetick",
+    "kx",
+    "market-data",
+    "sql",
+    "tick-data",
+    "webapi",
+    "arrow",
+    "mcp"
+  ]
+}

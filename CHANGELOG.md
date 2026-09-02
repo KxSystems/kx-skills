@@ -5,6 +5,20 @@ release, dated, listing the plugins that changed and their versions. Plugins are
 versioned independently ([SemVer](https://semver.org)) — there is no single
 marketplace version.
 
+## [2026-09-01]
+
+- **kdbai-knowledge 0.2.0** — new `sizing` skill: KDB.AI vector-index selection and
+  RAM/disk/GPU-VRAM estimation from dataset shape and workload (backed by
+  `scripts/estimate.py`). Also corrects the `kdbai` skill's CAGRA guidance — CAGRA
+  **requires** `dims` in its index params (previously documented as rejecting it) — and
+  documents the pre-`intermediate_graph_degree` build failure. (#18)
+- **All plugins** — added OpenAI Codex support. Each plugin's manifest now lives as a
+  canonical `plugin.json`/`mcp.json` at its root, read directly by Codex; Claude Code's
+  manifest is generated from that source (`tools/`). Marketplace entries gained Codex's
+  `policy` field, which Claude Code ignores at load time. Manifest-only — no skill
+  content change, and no version bump for the six plugins other than kdbai-knowledge.
+  See `tools/README.md`. (#18)
+
 ## [2026-08-17]
 
 - **kdbx-knowledge 0.3.0** — teach the aimeta authoring and discovery skills the
