@@ -29,11 +29,14 @@ gets consistent, high-quality results. The layout is the same for every client �
 ## Client support
 
 Each plugin's **source of truth** is a canonical `plugin.json` (+ `mcp.json` if it has MCP
-servers) at the plugin root, in the [agent-plugins.org](https://agent-plugins.org/specification)
-format — Codex reads these directly. `.claude-plugin/plugin.json` and `.mcp.json` are
-**generated** from that source for Claude Code and are overwritten on every regeneration —
-never hand-edit them. Skill content and directory layout don't change for either client.
-See [`tools/README.md`](./tools/README.md) for the full contract and how to regenerate.
+servers) at the plugin root, in the [Agent Plugins](https://agent-plugins.org/specification)
+format — any client that supports the spec reads these directly (confirmed here for Codex;
+other spec adopters should work the same way).
+`.claude-plugin/plugin.json` and `.mcp.json` are **generated** from that source for Claude
+Code, which doesn't yet read the canonical files natively, and are overwritten on every
+regeneration — never hand-edit them. Skill content and directory layout don't change across
+clients. See [`tools/README.md`](./tools/README.md) for the full contract and how to
+regenerate.
 
 `.claude-plugin/marketplace.json` is hand-maintained and read by both clients. Its plugin
 entries carry a `policy` block, which is a **Codex** field — Codex enforces it, and Claude
@@ -44,11 +47,13 @@ Code ignores it at load time (`claude plugin validate` reports one expected
 
 ## Other coding agents
 
-This repo's marketplace format (Claude Code plugins, and now Codex) is the primary
-distribution path. If you're on a different coding agent — Cursor, GitHub Copilot, Cline,
-and others — [Vercel's `skills` CLI](https://github.com/vercel-labs/skills) (`npx skills`)
-can pull individual `SKILL.md` files from any Git repo, including this one, into whichever
-agent-specific skills directory your tool expects:
+This repo's plugins are authored to the [Agent Plugins](https://agent-plugins.org/specification)
+spec, so any client that supports it — Cursor, GitHub Copilot, and other adopters, in
+addition to Codex — should be able to install and read them directly, the same way Codex
+does (untested here beyond Codex; see *Client support* above). If you're on a coding agent
+that doesn't support the spec — Cline and others — [Vercel's `skills` CLI](https://github.com/vercel-labs/skills)
+(`npx skills`) can still pull individual `SKILL.md` files from any Git repo, including this
+one, into whichever agent-specific skills directory your tool expects:
 
 ```
 npx skills add https://github.com/KxSystems/kx-skills.git
@@ -64,13 +69,17 @@ Claude Code / Codex installation paths above.
 
 ## Installation
 
-In Claude Code, add the marketplace:
+Pick the tab for your client.
+
+### Claude Code
+
+Add the marketplace:
 
 ```
 /plugin marketplace add KxSystems/kx-skills
 ```
 
-### Install plugins
+Install plugins:
 
 ```
 /plugin install q-knowledge@kx-skills
@@ -87,10 +96,38 @@ Or browse interactively with `/plugin` and pick from the **Discover** tab.
 > Every plugin bundles an MCP server. Run `/reload-plugins` after installation to activate
 > it without a full session restart.
 
-### Update later
+Update later:
 
 ```
 /plugin marketplace update kx-skills
+```
+
+### Codex
+
+Add the marketplace:
+
+```
+codex plugin marketplace add https://github.com/KxSystems/kx-skills.git
+```
+
+Install plugins:
+
+```
+codex plugin add q-knowledge@kx-skills
+codex plugin add pykx-knowledge@kx-skills
+codex plugin add kdbx-knowledge@kx-skills
+codex plugin add kdbai-knowledge@kx-skills
+codex plugin add kdbie-knowledge@kx-skills
+codex plugin add kx-dashboards-knowledge@kx-skills
+codex plugin add onetick-knowledge@kx-skills
+```
+
+Confirm an MCP-bundling plugin registered its server with `codex mcp list`.
+
+Update later:
+
+```
+codex plugin marketplace upgrade kx-skills
 ```
 
 ---

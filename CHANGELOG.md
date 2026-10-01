@@ -5,6 +5,14 @@ release, dated, listing the plugins that changed and their versions. Plugins are
 versioned independently ([SemVer](https://semver.org)) — there is no single
 marketplace version.
 
+## [2026-10-01]
+
+- **onetick-knowledge 0.1.1** — documents Codex/Agent Plugins support in the README
+  (install/auth/troubleshooting steps for both Claude Code and Codex), fixes the
+  `SKILL.md` MCP-registration URL (`mcp.cloud.onetick.com` → `skills-mcp.cloud.onetick.com`),
+  and drops an internal ticket reference that had leaked into the customer-facing
+  `SKILL.md` and `onetick_exec.py`. (#20)
+
 ## [2026-09-01]
 
 - **kdbai-knowledge 0.2.0** — new `sizing` skill: KDB.AI vector-index selection and
