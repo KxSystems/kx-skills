@@ -16,7 +16,7 @@ There are **two** OneTick surfaces and they do different jobs. Never mix them up
 - **OneTick MCP server (`OneTick-Cloud`)** — discovery and composition only. Use it to find databases, list tick-type variants, look up schemas, read field semantics, and search the SQL function reference. **Bulk data does not flow through MCP.**
 - **OneTick execution (REST fast path + onetick-py wheel fallback)** — execution only. The bundled helper (`scripts/onetick_exec.py`) runs finished SQL over Arrow, writes the **full** result to a Feather file, and returns a bounded preview + row-count envelope (never the whole result). By default it executes via a lightweight REST call to OneTick Cloud (sub-second per-query startup) and falls back to the onetick-py WebAPI wheel only when REST is genuinely unavailable. See **Execution** below. **Bulk data never floods the chat loop — only the preview does.**
 
-If the MCP server is not registered in the current session, the skill cannot do discovery — stop and tell the user to register it (`claude mcp add --transport http OneTick-Cloud https://mcp.cloud.onetick.com/mcp`).
+If the MCP server is not registered in the current session, the skill cannot do discovery — stop and tell the user to register it (`claude mcp add --transport http OneTick-Cloud https://skills-mcp.cloud.onetick.com/mcp`).
 
 ---
 
@@ -74,7 +74,7 @@ uv run "${CLAUDE_PLUGIN_ROOT}/skills/onetick-cloud/scripts/onetick_exec.py" --sq
 **What it does.** Runs the SQL byte-for-byte (the step-6 guardrails carry over), writes the **full** result to an Arrow Feather file, and prints a bounded JSON envelope:
 `{"rows": <total>, "columns": [{"name","type"},…], "preview_rows": <int>, "path": "<feather>", "preview": [first N rows], "sql": "<statement; omitted with --no-show-sql>"}`.
 
-**Execution engine (transparent — the CLI and envelope are identical either way).** By default the helper runs SQL through OneTick Cloud's REST endpoint (`omdwebapi/rest/`, CSV → Arrow), using only stdlib HTTP + `pyarrow`. This avoids importing the heavy onetick-py wheel (~6–7s of per-process startup), so a one-shot invocation starts in well under a second instead of ~7s (KXI-72495). If the REST path is genuinely unavailable — a transport/infra failure — it falls back automatically to the onetick-py `otp.SqlQuery` wheel; a OneTick *query* error (an `ERR_…` code) is surfaced immediately for the retry contract instead of triggering a fallback (the wheel would only reproduce it). You never pick an engine — an optional `ONETICK_EXEC_ENGINE=rest|wheel|auto` env var exists for debugging only.
+**Execution engine (transparent — the CLI and envelope are identical either way).** By default the helper runs SQL through OneTick Cloud's REST endpoint (`omdwebapi/rest/`, CSV → Arrow), using only stdlib HTTP + `pyarrow`. This avoids importing the heavy onetick-py wheel (~6–7s of per-process startup), so a one-shot invocation starts in well under a second instead of ~7s. If the REST path is genuinely unavailable — a transport/infra failure — it falls back automatically to the onetick-py `otp.SqlQuery` wheel; a OneTick *query* error (an `ERR_…` code) is surfaced immediately for the retry contract instead of triggering a fallback (the wheel would only reproduce it). You never pick an engine — an optional `ONETICK_EXEC_ENGINE=rest|wheel|auto` env var exists for debugging only.
 
 **No row cap.** The full result always goes to disk; stdout carries only the total `rows` count + a preview (N = `ONETICK_PREVIEW_ROWS` env, default 20), so a 5-row and a 5M-row query cost the same tokens. To bound the result, put a `limit` in the SQL. **Whenever `rows` exceeds `preview_rows`, give the user the `path`** (read with `pandas.read_feather(path)` / `pyarrow.feather.read_table(path)`) — never dump the full result into chat.
 
@@ -144,7 +144,7 @@ The retry contract is part of the skill, not the helper. The helper executes one
 
 User-facing install instructions live in the plugin's `README.md` — when distributed via a marketplace, `claude plugin install` auto-registers the `OneTick-Cloud` MCP server and drops the skill + helper in place. The user's only manual steps are: install `uv`, register at the OneTick portal, and export `OTP_CLIENT_ID` / `OTP_CLIENT_SECRET` in their shell.
 
-If the agent is loaded into a session where the OneTick MCP server is not registered, stop and tell the user to install the plugin or run `claude mcp add --transport http OneTick-Cloud https://mcp.cloud.onetick.com/mcp` manually.
+If the agent is loaded into a session where the OneTick MCP server is not registered, stop and tell the user to install the plugin or run `claude mcp add --transport http OneTick-Cloud https://skills-mcp.cloud.onetick.com/mcp` manually.
 
 ---
 

@@ -20,7 +20,7 @@ Two execution engines, chosen automatically (see `run_sql`):
     wheel with OAuth setup), so a one-shot invocation starts in well under a
     second instead of ~7s. This helper only ever runs SQL, never a Python-native
     otp graph, so the wheel is pure overhead for the job — that is what the REST
-    path removes. (KXI-72495.)
+    path removes.
   * onetick-py wheel fallback — the original path via `otp.SqlQuery`. Used only
     when the REST path is genuinely unavailable (transport/infra failure), or
     when forced with ONETICK_EXEC_ENGINE=wheel. A OneTick *query* error (an
