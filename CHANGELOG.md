@@ -7,7 +7,7 @@ marketplace version.
 
 ## [2026-10-15]
 
-- **kdbai-knowledge 0.3.0** — `sizing` skill: adds insert/delete headroom guidance, a typical-vs-2×-planning-ceiling RAM model, and a restructured "how the numbers were derived" output section, plus a rewritten partition-decision table in `SKILL.md`/`reference.md`. (#21)
+- **kdbai-knowledge 0.3.0** — adds insert/delete headroom guidance, a typical-vs-2×-planning-ceiling RAM model, and a restructured "how the numbers were derived" output section to the `sizing` skill, plus a rewritten partition-decision table in `SKILL.md`/`reference.md`. (#21)
 
 ## [2026-10-01]
 
