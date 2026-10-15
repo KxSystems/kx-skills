@@ -5,6 +5,10 @@ release, dated, listing the plugins that changed and their versions. Plugins are
 versioned independently ([SemVer](https://semver.org)) — there is no single
 marketplace version.
 
+## [2026-10-15]
+
+- **kdbai-knowledge 0.3.0** — `sizing` skill: adds insert/delete headroom guidance, a typical-vs-2×-planning-ceiling RAM model, and a restructured "how the numbers were derived" output section, plus a rewritten partition-decision table in `SKILL.md`/`reference.md`. (#21)
+
 ## [2026-10-01]
 
 - **onetick-knowledge 0.1.1** — documents Codex/Agent Plugins support in the README

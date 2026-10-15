@@ -1,6 +1,6 @@
 {
   "name": "kdbai-knowledge",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "KDB.AI vector database — schema design, hybrid search, integration patterns, and vector-index sizing",
   "author": {
     "name": "KX",
