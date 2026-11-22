@@ -3,242 +3,120 @@
 ## Contents
 
 - [Prerequisites](#prerequisites)
-- [Phase 1 - Authenticate with OneTick Cloud](#phase-1---authenticate-with-onetick-cloud)
-- [Phase 2 - Discover Available Data](#phase-2---discover-available-data)
-- [Phase 3 - Download Data](#phase-3---download-data)
-- [Phase 4 - Clean and Prepare Data](#phase-4---clean-and-prepare-data)
-- [Phase 5 - Ingest into DB Service](#phase-5---ingest-into-db-service)
-- [Phase 6 - Visualise with KX Dashboards (Optional)](#phase-6---visualise-with-kx-dashboards-optional)
+- [Phase 1 - Get Data via the `onetick-cloud` Helper](#phase-1---get-data-via-the-onetick-cloud-helper)
+- [Phase 2 - Clean and Prepare Data](#phase-2---clean-and-prepare-data)
+- [Phase 3 - Ingest into DB Service](#phase-3---ingest-into-db-service)
 - [OneTick Type Mapping](#onetick-type-mapping)
 - [Troubleshooting](#troubleshooting)
 
-This module covers the end-to-end pipeline for pulling market data from OneTick Cloud and ingesting it into the DB Service.
+This module covers the end-to-end pipeline for pulling market data from OneTick Cloud and ingesting it into the DB Service. It uses the `onetick-cloud` skill's bundled execution helper directly - the same mechanism that skill's own SQL workflow uses - rather than hand-rolling OneTick REST/OTQ calls.
 
-**Time estimate:** 20-40 minutes for a first run; ~5 minutes once you know your database, symbols, and OTQ path.
+**Time estimate:** 10-20 minutes for a first run; ~5 minutes once you know your database, table, and symbol.
 
 ---
 
 ## Prerequisites
 
 - [ ] KDB-X DB Service running - see `references/01-setup.md`
-- [ ] Python client installed with `pandas`, `requests`
-- [ ] OneTick Cloud account with API credentials (client ID + client secret)
+- [ ] Python client `kdbx_db_service_client==0.1.1` installed, with `pandas` and `pyarrow` (`pd.read_feather` needs pyarrow in the environment that reads the helper's output); `uv` installed (`brew install uv` or see https://docs.astral.sh/uv/)
+- [ ] OneTick Cloud account with API credentials (client ID + client secret), exported as `OTP_CLIENT_ID` / `OTP_CLIENT_SECRET`
   - Sign up / manage: https://authdash.cloud.onetick.com/web_dashboard/?dash=sub_profile
+- [ ] The `onetick-cloud` skill installed (it provides the execution helper this module runs). If it isn't:
+  ```
+  /plugin marketplace add KxSystems/kx-skills
+  /plugin install onetick-knowledge@kx-skills
+  ```
 
 ---
 
-## Phase 1 - Authenticate with OneTick Cloud
+## Phase 1 - Get Data via the `onetick-cloud` Helper
 
-All API calls require a bearer token obtained via client credentials:
+### Locate the helper script
 
-```python
-import requests
-
-TOKEN_URL     = "https://cloud-auth.parent.onetick.com/realms/OMD/protocol/openid-connect/token"
-REST_URL      = "https://rest.cloud.onetick.com/omdwebapi/rest/"
-CLIENT_ID     = "<your-client-id>"      # from OneTick Cloud portal
-CLIENT_SECRET = "<your-client-secret>"  # from OneTick Cloud portal
-
-def get_access_token():
-    r = requests.post(
-        TOKEN_URL,
-        data={"grant_type": "client_credentials"},
-        auth=(CLIENT_ID, CLIENT_SECRET)
-    )
-    r.raise_for_status()
-    return r.json()["access_token"]
-
-access_token = get_access_token()
-print("Authenticated")
+```bash
+find ~ -path '*onetick-cloud/scripts/onetick_exec.py' 2>/dev/null | head -1   # no depth limit: plugin installs sit about ten levels below home
 ```
 
-Tokens expire. If a subsequent request returns a 401, re-call `get_access_token()`.
+Substitute the actual path throughout, resolving it on each machine.
 
----
+### Know your target (discovery)
 
-## Phase 2 - Discover Available Data
+If the `OneTick-Cloud` MCP server is registered in this session, use its tools first to confirm the real database/table/column names rather than guessing: `list_databases`, `db_table_schemas`, `db_field_descriptions`. If it isn't registered, browse the catalogue manually at https://authdash.cloud.onetick.com/web_dashboard/?dash=databases, or reuse a known-working target (e.g. `LSE_SAMPLE.TRD` for UK equity trades).
 
-Before downloading, discover which databases, symbols, and data types are available in your subscription.
+### Compose SQL and run it
 
-### List available databases
+Apply the same guardrails the `onetick-cloud` skill documents: an explicit timezone on every time literal, `>=`/`<` instead of `BETWEEN` (OneTick rejects `BETWEEN` on `TIMESTAMP`), and a `limit` to bound the result.
 
-```python
-params = {
-    "query_type": "otq",
-    "otq":        "admin_query.otq::list_databases",
-    "response":   "csv",
-}
-r = requests.post(REST_URL, json=params,
-                  headers={"Authorization": f"Bearer {access_token}",
-                           "Content-Type": "application/json"})
-print(r.text[:2000])
+The user enters the client secret in their own terminal. Claude never asks for, repeats, stores or writes the secret into a command or file. Use the placeholders below and tell the user to set the values.
+
+```bash
+export OTP_CLIENT_ID="<your-client-id>"
+export OTP_CLIENT_SECRET="<your-client-secret>"
+
+SQL="select SYMBOL_NAME, TIMESTAMP, PRICE, SIZE
+     from LSE_SAMPLE.TRD
+     where SYMBOL_NAME='VOD'
+       and TIMESTAMP >= '2024-01-03 09:00:00 UTC'
+       and TIMESTAMP < '2024-01-03 09:01:00 UTC'
+     limit 500000"
+
+uv run "<path-to>/onetick_exec.py" --sql "$SQL"
 ```
 
-Browse the full catalogue at: https://authdash.cloud.onetick.com/web_dashboard/?dash=databases
+**Useful flags** (from the script's own `argparse` definition):
 
-### List symbols in a database
+| Flag | Default | Purpose |
+|---|---|---|
+| `--sql` | - | Inline SQL (as above) |
+| `--sql-file` | - | Read the SQL from a file instead |
+| *(stdin)* | - | Pipe SQL in if neither `--sql` nor `--sql-file` is given |
+| `--timezone` | `Europe/London` | Timezone for rendered output timestamps |
+| `--output` | `${TMPDIR}/onetick-results/<hash>.feather` | Where the full Arrow Feather result is written |
+| `--show-sql` / `--no-show-sql` | on | Whether the executed SQL is echoed in the envelope's `sql` field |
 
-```python
-DB = "<your-database>"   # e.g. "LSE_SAMPLE"
+The first `uv run` resolves dependencies into a cached venv (slow once, fast after). The command prints a JSON envelope: `{"rows": <total>, "columns": [...], "preview_rows": <int>, "path": "<feather>", "preview": [...], "sql": "..."}`. The **full** result is always on disk at `path`, regardless of row count - stdout only carries a bounded preview.
 
-params = {
-    "query_type": "otq",
-    "otq":        "admin_query.otq::list_symbols",
-    "response":   "csv",
-    "otq_params": f"DB={DB}",
-}
-r = requests.post(REST_URL, json=params,
-                  headers={"Authorization": f"Bearer {access_token}",
-                           "Content-Type": "application/json"})
-print(r.text[:2000])
-```
-
-### Discover available fields
-
-Request a small sample to inspect the column schema:
+### Load the result
 
 ```python
-import io, pandas as pd
-
-SAMPLE_PARAMS = {
-    "query_type":             "otq",
-    "otq":                    "<your-otq-path>",    # e.g. "quotes.otq::data"
-    "s":                      "<start>",             # e.g. "20240103090000.000"
-    "e":                      "<start-plus-1min>",   # e.g. "20240103090100.000"
-    "timezone":               "UTC",
-    "response":               "csv",
-    "output_only_one_header": "true",
-    "otq_params":             f"DB={DB},DELIM=|,SYM_LIST=<one-symbol>,FIELDS=,LIMIT=100",
-}
-r = requests.post(REST_URL, json=SAMPLE_PARAMS,
-                  headers={"Authorization": f"Bearer {access_token}",
-                           "Content-Type": "application/json"})
-df_sample = pd.read_csv(io.StringIO(r.text))
-print("Available columns:", list(df_sample.columns))
-print(df_sample.head())
-```
-
-Record the column names exactly as returned. The DB Service lowercases all column names on ingest.
-
----
-
-## Phase 3 - Download Data
-
-### Request parameter reference
-
-| Parameter                 | Description                     | Example                                        |
-| ------------------------- | ------------------------------- | ---------------------------------------------- |
-| `otq`                     | OTQ query path (data type)      | `quotes.otq::data`, `trades.otq::data`         |
-| `s`                       | Start time `YYYYMMDDHHmmss.mmm` | `20240103090000.000`                           |
-| `e`                       | End time `YYYYMMDDHHmmss.mmm`   | `20240103163000.000`                           |
-| `timezone`                | Timezone for `s`/`e`            | `UTC`, `US/Eastern`, `Europe/London`           |
-| `response`                | Output format                   | `csv`                                          |
-| `compression`             | Compress response               | `gzip`                                         |
-| `show_times_as_nanos`     | Timestamps as nanoseconds       | `true` (required for kdb timestamp conversion) |
-| `output_only_one_header`  | Single header row               | `true`                                         |
-| `output_types_in_headers` | Type metadata in header         | `false`                                        |
-| `otq_params`              | OTQ-specific parameters         | See table below                                |
-
-**`otq_params` keys:**
-
-| Key         | Description                             | Example                            |
-| ----------- | --------------------------------------- | ---------------------------------- |
-| `DB`        | OneTick database name                   | `LSE_SAMPLE`                       |
-| `DELIM`     | Separator for multi-value fields        | `\|` (pipe)                        |
-| `SYM_LIST`  | Symbols to fetch (separated by `DELIM`) | `VOD\|BARC\|LLOY`                  |
-| `SYMBOLOGY` | Symbol lookup type                      | empty (native), `ISIN`, `CUSIP`    |
-| `ADJUST`    | Apply split/dividend adjustment         | `false`                            |
-| `CURRENCY`  | Convert prices to this currency         | empty (native), `USD`              |
-| `FIELDS`    | Comma-separated fields to return        | empty (all), `BID_PRICE,ASK_PRICE` |
-| `LIMIT`     | Maximum rows                            | `500000`                           |
-
-### Download code
-
-```python
-import gzip
-
-DB          = "<your-database>"          # e.g. "LSE_SAMPLE"
-OTQ_PATH    = "<your-otq-path>"          # e.g. "quotes.otq::data"
-SYM_LIST    = "<sym1>|<sym2>"            # pipe-delimited, e.g. "VOD|BARC"
-FIELDS      = ""                         # empty = all fields
-START       = "<YYYYMMDDHHmmss.mmm>"
-END         = "<YYYYMMDDHHmmss.mmm>"
-TIMEZONE    = "UTC"
-LIMIT       = "500000"
-OUTPUT_FILE = "<your-table-name>.csv"
-
-params = {
-    "query_type":              "otq",
-    "otq":                     OTQ_PATH,
-    "s":                       START,
-    "e":                       END,
-    "timezone":                TIMEZONE,
-    "response":                "csv",
-    "compression":             "gzip",
-    "output_only_one_header":  "true",
-    "output_types_in_headers": "false",
-    "show_times_as_nanos":     "true",
-    "otq_params":              f"DB={DB},DELIM=|,SYM_LIST={SYM_LIST},SYMBOLOGY=,ADJUST=false,CURRENCY=,FIELDS={FIELDS},LIMIT={LIMIT}",
-}
-
-response = requests.post(REST_URL, json=params,
-                         headers={"Authorization": f"Bearer {access_token}",
-                                  "Content-Type": "application/json"})
-response.raise_for_status()
-
-with open(OUTPUT_FILE, "w") as f:
-    f.write(gzip.decompress(response.content).decode("utf-8"))
-
-print(f"Downloaded: {OUTPUT_FILE}")
-
-df_raw = pd.read_csv(OUTPUT_FILE)
+import pandas as pd
+df_raw = pd.read_feather("<path from the envelope>")
 print(f"Rows: {len(df_raw)}, Columns: {list(df_raw.columns)}")
-print(df_raw.head())
+print(df_raw.dtypes)
 ```
+
+Timestamp columns come back already as proper `datetime64[ns]` - no manual nanosecond conversion needed, unlike a raw OneTick REST/OTQ response.
 
 ---
 
-## Phase 4 - Clean and Prepare Data
+## Phase 2 - Clean and Prepare Data
 
-### Inspect types and identify key columns
+### Identify key columns
 
 ```python
-df = pd.read_csv(OUTPUT_FILE)
-print(df.dtypes)
+print(df_raw.dtypes)
 ```
 
-Identify:
-
-- **Timestamp column** - nanosecond integer (from `show_times_as_nanos=true`). Convert to datetime and use as `prtnCol`.
+- **Timestamp column** - already `datetime64[ns]`. Use it as `prtnCol`.
 - **Symbol column** - will get `attrMem: "grouped"`, `attrDisk: "parted"`.
 - **Numeric columns** - use `float` for prices/rates, `long` for sizes/counts.
 
-### Clean and rename
+### Rename to your target schema
 
 ```python
-TIMESTAMP_COL = "#TIMESTAMP"     # nanosecond timestamp column from OneTick
-SYMBOL_COL    = "_SYMBOL_NAME"   # symbol column from OneTick
-TABLE_NAME    = "<your-table>"
+TABLE_NAME = "<your-table>"
 
-# Convert nanosecond timestamps to datetime
-df[TIMESTAMP_COL] = pd.to_datetime(df[TIMESTAMP_COL], unit="ns", errors="coerce")
-
-# Rename to lowercase-friendly names
 column_map = {
-    TIMESTAMP_COL: "ts",
-    SYMBOL_COL:    "sym",
-    # Add all other columns, e.g.:
-    # "BID_PRICE":   "bidprice",
-    # "ASK_PRICE":   "askprice",
-    # "BID_SIZE":    "bidsize",
-    # "ASK_SIZE":    "asksize",
-    # "EXCH_TIME":   "exchtime",
-    # "SPREAD":      "spread",
-    # "MID":         "mid",
+    "TIMESTAMP":    "ts",
+    "SYMBOL_NAME":  "sym",
+    "PRICE":        "price",
+    "SIZE":         "size",
+    # If you selected more columns in Phase 1 (e.g. TRADE_TYPE, TRADE_VENUE),
+    # add a rename entry for each here - and a matching column in create_table below.
 }
-df = df.rename(columns=column_map)
+df = df_raw.rename(columns=column_map)
 
-# Drop columns you do not need
+# Keep only the columns you need
 # df = df.drop(columns=["unwanted_col"])
 
 clean_file = f"{TABLE_NAME}_clean.csv"
@@ -248,7 +126,7 @@ print(f"Saved {clean_file} with {len(df)} rows")
 
 ---
 
-## Phase 5 - Ingest into DB Service
+## Phase 3 - Ingest into DB Service
 
 ### Create schema and ingest
 
@@ -267,13 +145,11 @@ session.create_table(
     sortColsDisk=["sym"],
     sortColsOrd=["sym"],
     columns=[
-        {"name": "ts",        "type": "timestamp"},
-        {"name": "sym",       "type": "symbol", "attrMem": "grouped", "attrDisk": "parted"},
-        # Add your other columns:
-        # {"name": "bidprice", "type": "float"},
-        # {"name": "askprice", "type": "float"},
-        # {"name": "bidsize",  "type": "long"},
-        # {"name": "asksize",  "type": "long"},
+        {"name": "ts",    "type": "timestamp"},
+        {"name": "sym",   "type": "symbol", "attrMem": "grouped", "attrDisk": "parted"},
+        {"name": "price", "type": "float"},
+        {"name": "size",  "type": "long"},
+        # Add your other columns
     ]
 )
 
@@ -282,56 +158,66 @@ shutil.copyfile(clean_file, os.path.join(DB_DIR, "data", "imports", clean_file))
 
 # Ingest (no createTable - schema already defined above)
 job = session.import_files(table=TABLE_NAME, path=clean_file)
-jid = job["name"]
+jid = job["jobId"]
 print(f"Ingest job: {jid}")
 
-# Poll for completion
+# Poll for completion: stop on completed, fail on errored/canceled, time out otherwise
 for i in range(30):
     status = session.get_import(job_id=jid)
     print(f"[{i*2}s] {status['status']}")
-    if status["status"] in ("completed", "errored"):
-        print(status)
+    if status["status"] == "completed":
         break
+    if status["status"] in ("errored", "canceled"):
+        raise RuntimeError(f"import {jid} {status['status']}: {status.get('error')}")
     time.sleep(2)
+else:
+    raise TimeoutError(f"import {jid} still {status['status']} after 60s")
 ```
+
+Run the count check below only after this loop has returned normally.
 
 ### Verify row count
 
-```python
-start_date = df['ts'].min().strftime('%Y.%m.%d') + 'D00:00:00.000'
-end_date   = df['ts'].max().strftime('%Y.%m.%d') + 'D23:59:59.999'
+Push the count down with `query_simple`'s `groupBy` + `agg` rather than `len(session.query_simple(...))`, which on OneTick tick data (tens of millions of rows/day) OOMs the aggregator; see `references/06-query-guide.md` > Push Down Aggregations).
 
-result = session.query_simple(
+```python
+# Per-symbol counts, reduced server-side (safe on tables of any size).
+# Group by a column this table actually has (the schema above has no trddate; grouping by it returns HTTP 400 "Group column not found").
+counts = session.query_simple(
     table=TABLE_NAME,
-    startTS=start_date,
-    endTS=end_date,
-    return_as="pandas"
+    startTS=START_TS,   # the download interval, ISO format, e.g. "2026-03-02T00:00:00"
+    endTS=END_TS,       # exclusive end of that interval
+    groupBy=["sym"],
+    agg=[["n", "count", "sym"]],   # count a real, always-populated column (the virtual `i` is rejected)
+    return_as="pandas",
 )
-print(f"Rows in DB: {len(result)}")   # should match len(df)
-print(result.head())
+print(counts)
+print(f"Rows in DB: {int(counts['n'].sum())}")   # should match len(df)
 ```
+
+For a quick look at a few rows, use `session.query_preview(table=TABLE_NAME, limit=5)`.
 
 ---
 
 ## OneTick Type Mapping
 
-| OneTick raw type    | After conversion                                        | DB Service column type |
-| ------------------- | ------------------------------------------------------- | ---------------------- |
-| `int64` nanoseconds | `datetime64[ns]` (via `pd.to_datetime(..., unit='ns')`) | `timestamp`            |
-| `float64`           | `float64`                                               | `float`                |
-| `object` (string)   | `object`                                                | `symbol`               |
-| `int64` (row index) | `int64`                                                 | `long`                 |
+| OneTick/Arrow type (from the Feather result) | DB Service column type |
+| --------------------------------------------- | ----------------------- |
+| `timestamp[ns]` -> `datetime64[ns]`           | `timestamp`              |
+| `double` -> `float64`                         | `float`                  |
+| `string` -> `object`                          | `symbol`                 |
+| `int64`                                       | `long`                   |
 
 ---
 
 ## Troubleshooting
 
 | Symptom                                  | Check                                                                                                               |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `response.raise_for_status()` throws 401 | Token expired - re-run `get_access_token()`                                                                         |
-| `response.raise_for_status()` throws 400 | Check `otq_params` syntax - no spaces around `=` or `,`; verify OTQ path exists in your subscription                |
-| Empty CSV (header only)                  | Symbol not in the chosen database, or date range has no data - verify via web dashboard                             |
-| Ingest job errored                       | Check `status['error']`; commonly a type mismatch or missing column - re-inspect `df.dtypes`                        |
-| `no file found: /imports/<file>`         | File must be copied to `data/imports/` before calling `import_files`; pass only the filename                        |
-| Rows in DB do not match rows downloaded  | Timestamp column not converting correctly - check `unit="ns"` matches `show_times_as_nanos=true`                    |
-| Column names wrong in query              | DB Service lowercases all column names on ingest - use lowercase in all queries                                     |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Helper exits non-zero with `{"error": "Missing OneTick credentials: ..."}` | `OTP_CLIENT_ID`/`OTP_CLIENT_SECRET` not exported in this shell - export them, then retry with real values |
+| Helper exits non-zero with `{"error": "ERR_..."}` | A OneTick-level SQL error - fix the SQL per the error text (field name, operator, timezone); retry at most ~3 times, each time after a fix |
+| `rows: 0` in the envelope on a query that should return data | Symbol/table/date range mismatch - verify via the web dashboard, or run a `select distinct SYMBOL_NAME from <DB>.<TICK_TYPE> ...` diagnostic |
+| Ingest job errored | Check `status['error']`; commonly a type mismatch or missing column - re-inspect `df.dtypes` |
+| `no file found: /imports/<file>` | File must be copied to `data/imports/` before calling `import_files`; pass a path relative to `data/imports/`, not a host path |
+| Column names wrong in query | Column case is kept as ingested - run `describe_table` and query with the same case |
+| First `uv run` is slow | Expected - it resolves `onetick-py`/`pandas`/`pyarrow` into a cached venv once; subsequent runs are fast |
