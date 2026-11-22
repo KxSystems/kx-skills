@@ -5,6 +5,10 @@ release, dated, listing the plugins that changed and their versions. Plugins are
 versioned independently ([SemVer](https://semver.org)) — there is no single
 marketplace version.
 
+## [2026-11-22]
+
+- **kdbx-knowledge 0.4.0** — kdbx-db-service skill v4.2.0: shorter SKILL.md, new references for advanced features, ingestion methods, query guide, tables and a live-docs index; rewritten setup, OneTick and troubleshooting references and both recipes. (#22)
+
 ## [2026-10-15]
 
 - **kdbai-knowledge 0.3.0** — adds insert/delete headroom guidance, a typical-vs-2×-planning-ceiling RAM model, and a restructured "how the numbers were derived" output section to the `sizing` skill, plus a rewritten partition-decision table in `SKILL.md`/`reference.md`. (#21)
